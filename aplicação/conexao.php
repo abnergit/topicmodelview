@@ -2,8 +2,8 @@
 
 
 $host = "localhost"; // Local da base de dados MySQL
-$usuario = "root"; // Login do MySQL
-$password = "brasil2020"; // Senha para conectar com o MySQL
+$usuario = "login_banco"; // Login do MySQL
+$password = "senha_banco"; // Senha para conectar com o MySQL
 $base = "discursos"; // Nome do Banco de Dados
 
 
