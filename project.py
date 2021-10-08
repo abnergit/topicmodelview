@@ -165,7 +165,7 @@ gamma.close()
 ################### POPULANDO BANCO DE DADOS ###############################################
 
 
-os.system(f"python3 generate_db.py doc_wordcount_file.txt betafile.txt gamma_file.txt vocab_file.txt doc_file.txt {nome_projeto}")
+os.system(f"python3 populate_db.py doc_wordcount_file.txt betafile.txt gamma_file.txt vocab_file.txt doc_file.txt {nome_projeto}")
 
 
 
