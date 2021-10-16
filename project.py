@@ -55,6 +55,8 @@ from gensim.corpora import Dictionary
 dictionary = Dictionary(documents=dataset, prune_at=None)
 dictionary.filter_extremes(no_below=5, no_above=0.3, keep_n=None)  # use Dictionary to remove un-relevant tokens
 #O FILTRO ACIMA ELIMINA TERMOS QUE NÃO APARECEM EM PELO MENOS 5 DOCUMENTOS OU QUE ESTÃO EM MAIS DE 30% DOS DOCUMENTOS
+#PORTANTO, SÃO NECESSÁRIOS APROXIMADAMENTE, PELO MENOS, 20 DOCUMENTOS PARA SATISFAZER ESSA CONDIÇÃO.
+
 dictionary.compactify()
 
 d2b_dataset = [dictionary.doc2bow(doc) for doc in dataset]  # convert list of tokens to bag of word representation
