@@ -1,6 +1,10 @@
 # Topic Model Viewer
 This is a web application to view and navigate into a LDA model.
 
+Python 3.8.10
+PHP 7.4.3
+
+
 # project.py
 
 python3 project.py
