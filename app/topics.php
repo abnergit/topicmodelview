@@ -39,13 +39,9 @@ if(isset($topico)){
 				<li class="list-group-item border-0">
 					<div class="media link-dark align-items-center">
 						<!-- Avatar >
-						<img class="u-avatar-sm rounded-circle mr-3" src="../fotos/<?php echo $row['iddeputado'] ?>.jpg" alt="Image description">
-						<!-- End Avatar -->
-
 						<!-- Title and Short Text -->
 						<div class="media-body">
 							<h4 class="font-weight-normal pt-1 mb-1"><?php echo $row['title'] ?></h4>
-							<!--div class="text-muted"><?php echo $row['email'] ?></div-->
 						</div>
 						<!-- End Title and Short Text -->
 					</div>
@@ -64,7 +60,7 @@ if(isset($topico)){
 
 		<!-- Card Footer -->
 		<footer class="card-footer">
-			<a class="font-weight-semi-bold" href="/topicmodel/topicos/">Ver todos...</a>
+			<a class="font-weight-semi-bold" href="/topicos/">Ver todos...</a>
 		</footer>
 		<!-- End Card Footer -->
 	</div>

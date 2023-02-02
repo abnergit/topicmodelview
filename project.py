@@ -2,15 +2,28 @@
 import os
 import time
 
+########### VERIFICANDO PERM DO USUÁRIO ############
+if (not os.access("/var/www/html",os.W_OK)):
+	print("Seu usuário não tem permissão em /var/www/html ou apache2 não está instalado")
+	exit()
+
+
 ####### CRIANDO BANCO DE DADOS #####################
 nome_projeto = " "
 while(" " in nome_projeto):
 	nome_projeto = input("Informe o nome do Projeto sem espaços: ")
 
 password = input("MySQL root password: ")
-os.system(f"echo \"create database {nome_projeto};\" | mysql -u root -p{password}")
+senha_valida = os.system(f"echo \"create database {nome_projeto};\" | mysql -u root -p{password} 2>/dev/null")
+if (senha_valida != 0):
+    exit()
+
+################# Parâmetros do MODELO ###############
+num_topics = int(input("Informe a quantidade de tópicos desejado: "))
+
+
 time.sleep(1)
-os.system(f"mysql -u root -p{password} {nome_projeto} < banco.sql")
+os.system(f"mysql -u root -p{password} {nome_projeto} < banco.sql 2>/dev/null")
 
 #####################################################
 
@@ -52,11 +65,9 @@ def text2tokens(raw_text):
 dataset = [text2tokens(txt) for txt in documentos_lista]  # convert a documents to list of tokens
 
 from gensim.corpora import Dictionary
+print(dataset)
 dictionary = Dictionary(documents=dataset, prune_at=None)
-dictionary.filter_extremes(no_below=5, no_above=0.3, keep_n=None)  # use Dictionary to remove un-relevant tokens
-#O FILTRO ACIMA ELIMINA TERMOS QUE NÃO APARECEM EM PELO MENOS 5 DOCUMENTOS OU QUE ESTÃO EM MAIS DE 30% DOS DOCUMENTOS
-#PORTANTO, SÃO NECESSÁRIOS APROXIMADAMENTE, PELO MENOS, 20 DOCUMENTOS PARA SATISFAZER ESSA CONDIÇÃO.
-
+dictionary.filter_extremes(no_below=5, no_above=0.5, keep_n=None)  # use Dictionary to remove un-relevant tokens
 dictionary.compactify()
 
 d2b_dataset = [dictionary.doc2bow(doc) for doc in dataset]  # convert list of tokens to bag of word representation
@@ -100,6 +111,7 @@ arquivo.close()
 print("GERANDO VOCAB FILE...")
 dicionario = open("vocab_file.txt","w")
 dic_list = []
+print(dictionary)
 for i in range(len(dictionary)):
     dic_list.append(dictionary[i])
 dicionario.write("\n".join(dic_list))
@@ -111,7 +123,7 @@ dicionario.close()
 ###########GERANDO MODELO LDA ##############################################################
 print("GERANDO MODELO LDA ...")
 from gensim.models import LdaMulticore
-num_topics = 20
+#num_topics = 5
 
 lda_fst = LdaMulticore(
     corpus=d2b_dataset, num_topics=num_topics, id2word=dictionary,
@@ -125,7 +137,7 @@ print("GERANDO BETA FILE ...")
 total_palavras = len(open("vocab_file.txt").readlines())
 beta = open("betafile.txt","w")
 beta_texto = ""
-print(sorted(lda_fst.get_topic_terms(19,topn=total_palavras))[0][1])
+print(sorted(lda_fst.get_topic_terms((num_topics-1),topn=total_palavras))[0][1])
 for i in range(num_topics):
     lista_beta_tupla = sorted(lda_fst.get_topic_terms(i,topn=total_palavras))
     for j in range(total_palavras):
@@ -168,11 +180,24 @@ gamma.close()
 ################### POPULANDO BANCO DE DADOS ###############################################
 
 
-os.system(f"python3 populate_db.py doc_wordcount_file.txt betafile.txt gamma_file.txt vocab_file.txt doc_file.txt {nome_projeto}")
+os.system(f"python3 populate_db.py doc_wordcount_file.txt betafile.txt gamma_file.txt vocab_file.txt doc_file.txt {nome_projeto} {password}")
+
+######### INICIANDO A APLICAÇÃO PHP NO SERVIDOR APACHE ###########
 
 
+conexao = open("app/conexao_modelo.php","r").read()
 
+new_conexao = conexao.replace("senha_banco",password)
+new_conexao = new_conexao.replace("login_banco","root")
+new_conexao = new_conexao.replace("nome_projeto",nome_projeto)
 
+save = open("app/conexao.php","w")
+save.write(new_conexao)
+save.close()
+
+#os.system(f"cp -R aplicação/ /var/www/html/{nome_projeto}")
+os.system(f"cp -R corpus/ app/corpus")
+os.system("cd app/;php -S localhost:2000")
 
 
 

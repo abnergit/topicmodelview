@@ -199,7 +199,7 @@ function get_topic_name($conexao, $id)
 									$result = $conexao->query($sql);
 									while ($row = $result->fetch_assoc()) {
 										$palavra = get_topic_name($conexao, $row['topic']);
-										echo "<a href='/topicmodel/topicos/topico/?id=".$row['topic']."' >";
+										echo "<a href='/topicos/topico/?id=".$row['topic']."' >";
 										echo $palavra;
 										echo "</a><br>";
 										

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+require_once("../../conexao.php");
 
 
 if (isset($_GET['id']) and is_numeric($_GET['id'])) {
@@ -13,23 +14,10 @@ if (isset($_GET['id']) and is_numeric($_GET['id'])) {
 <?php
 }
 
-function imprime_texto($titulo)
+function imprime_texto($titulo, $base)
 {
-	/*
-	$id          = explode("oc_", $titulo)[1];
-	$file_handle = fopen("../corpus.txt", "r");
-	$count       = 0;
-	$retorno     = "";
-	while (!feof($file_handle)) {
-		$line = fgets($file_handle);
-		if ($count == $id) {
-			$retorno = $line;
-			break;
-		}
-		$count++;
-	}
-	*/
-	$file_handle = fopen("/var/www/html/topicmodel/corpus/doc_$titulo", "r");
+	
+	$file_handle = fopen("../../corpus/doc_$titulo", "r");
 	$retorno = "";
 	while (!feof($file_handle)) {
 		$retorno = $retorno.fgets($file_handle);
@@ -162,9 +150,9 @@ function get_topic_name($conexao, $id)
 									while ($row = $result->fetch_assoc()) {
 										#$palavra = get_termo($conexao, $row['term']);
 										#echo $palavra . "<br>";
-										$texto = imprime_texto($row['doc']);
+										$texto = imprime_texto($row['doc'], $base);
 										$id_texto = $row['doc'];
-										echo "<a href='/topicmodel/documentos/documento/?id=$id_texto'><b>Texto ".$row['doc']."</b></a>";
+										echo "<a href='/documentos/documento/?id=$id_texto'><b>Documento ".$row['doc']." - Score [".$row['score']."]</b></a>";
 										echo "<textarea readonly rows='3'>";
 										echo $texto;
 										echo "</textarea>";
@@ -195,7 +183,7 @@ function get_topic_name($conexao, $id)
 									$result = $conexao->query($sql);
 									while ($row = $result->fetch_assoc()) {
 										$palavra = get_topic_name($conexao, $row['topic_b']);
-										echo "<a href='/topicmodel/topicos/topico/?id=".$row['topic_b']."' >";
+										echo "<a href='/topicos/topico/?id=".$row['topic_b']."' >";
 										echo $palavra;
 										echo "</a><br>";
 										

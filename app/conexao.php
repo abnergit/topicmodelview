@@ -2,9 +2,9 @@
 
 
 $host = "localhost"; // Local da base de dados MySQL
-$usuario = "login_banco"; // Login do MySQL
-$password = "senha_banco"; // Senha para conectar com o MySQL
-$base = "discursos"; // O nome do BANCO DE DADOS é o mesmo nome do projeto que foi informado no script project.py.
+$usuario = "root"; // Login do MySQL
+$password = "brasil2022"; // Senha para conectar com o MySQL
+$base = "mais1"; // O nome do BANCO DE DADOS é o mesmo nome do projeto que foi informado no script project.py.
 
 
 
