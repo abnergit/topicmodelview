@@ -3,7 +3,7 @@ import math
 #import sqlite3
 import mysql.connector
 import functools
-
+import os
 
 
 ### score functions ###
@@ -168,11 +168,15 @@ def write_topic_topic(con, cur, beta_file):
         #topic_sim = r
         topicb_count = 0
         for topicb in topics:
-            if topic_by_topic.count((topicb_count, topica_count)) != 0:
-                topicb_count +=1
-                continue
+            #if topic_by_topic.count((topicb_count, topica_count)) != 0:
+            #    topicb_count +=1
+            #    continue
             score = get_topic_score(topica, topicb)
+            if (score == 0):
+                topicb_count += 1
+                continue
             cur.execute('INSERT INTO topic_topic (id, topic_a, topic_b, score) VALUES(%s, %s, %s, %s)', [int(id_autoincrement),topica_count, topicb_count, score])
+            os.system(f"echo INSERT INTO topic_topic \(id, topic_a, topic_b, score\) VALUES \({id_autoincrement}, {topica_count}, {topicb_count}, {score}\) >> topicos_topicos")
             id_autoincrement = id_autoincrement + 1
             
             topic_by_topic.append((topica_count, topicb_count))
@@ -272,7 +276,7 @@ def write_docs(con, cur, docs_file):
 ### main ###
 
 if (__name__ == '__main__'):
-    if (len(sys.argv) != 7):
+    if (len(sys.argv) != 8):
        #print 'usage: python generate_csvs.py <db-filename> <doc-wordcount-file> <beta-file> <gamma-file> <vocab-file> <doc-file>\n'
        print ('usage: python generate_csvs.py <doc-wordcount-file> <beta-file> <gamma-file> <vocab-file> <doc-file>\n')
 
@@ -285,12 +289,13 @@ if (__name__ == '__main__'):
     vocab_file = sys.argv[4]
     doc_file = sys.argv[5]
     banco = sys.argv[6]
+    rootpass = sys.argv[7]
 
     # connect to database, which is presumed to not already exist
     con = mysql.connector.connect(
         host="localhost",
         user="root",
-        password="brasil2020",
+        password=rootpass,
         database=banco
     )
     #con = sqlite3.connect(filename)
@@ -329,3 +334,4 @@ if (__name__ == '__main__'):
     print ("writing doc_term to db...")
     write_doc_term(con, cur, doc_wordcount_file, len(vocab))
 
+    print(f"Acesse: http://localhost/{banco}")
