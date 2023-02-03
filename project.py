@@ -196,6 +196,13 @@ save.close()
 
 os.system(f"cp -R corpus/ app/")
 os.system("cd app/;php -S localhost:2000")
+start_script = """ 
+#!/bin/bash
+php -S localhost:2000"""
+script_file = open("app/start.sh","w")
+script_file.write(start_script)
+script_file.close()
+
 
 
 
