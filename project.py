@@ -195,8 +195,7 @@ save = open("app/conexao.php","w")
 save.write(new_conexao)
 save.close()
 
-#os.system(f"cp -R aplicação/ /var/www/html/{nome_projeto}")
-os.system(f"cp -R corpus/ app/corpus")
+os.system(f"cp -R corpus/ app/")
 os.system("cd app/;php -S localhost:2000")
 
 
