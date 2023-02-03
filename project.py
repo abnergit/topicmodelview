@@ -111,7 +111,6 @@ arquivo.close()
 print("GERANDO VOCAB FILE...")
 dicionario = open("vocab_file.txt","w")
 dic_list = []
-print(dictionary)
 for i in range(len(dictionary)):
     dic_list.append(dictionary[i])
 dicionario.write("\n".join(dic_list))
@@ -137,7 +136,7 @@ print("GERANDO BETA FILE ...")
 total_palavras = len(open("vocab_file.txt").readlines())
 beta = open("betafile.txt","w")
 beta_texto = ""
-print(sorted(lda_fst.get_topic_terms((num_topics-1),topn=total_palavras))[0][1])
+sorted(lda_fst.get_topic_terms((num_topics-1),topn=total_palavras))
 for i in range(num_topics):
     lista_beta_tupla = sorted(lda_fst.get_topic_terms(i,topn=total_palavras))
     for j in range(total_palavras):
