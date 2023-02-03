@@ -82,7 +82,7 @@ function get_topic_name($conexao, $id)
 	<!-- Web Fonts -->
 	<link href = "//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel = "stylesheet">
 
-	<!-- Components Vendor Styles -->
+	
 	<link rel = "stylesheet" href = "../../assets/vendor/themify-icons/themify-icons.css">
 	<link rel = "stylesheet" href = "../../assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
 
@@ -227,18 +227,6 @@ function get_topic_name($conexao, $id)
 	</main>
 	<!-- End Main -->
 
-	<!-- Global Vendor -->
-	<script src = "../../assets/vendor/jquery/dist/jquery.min.js"></script>
-	<script src = "../../assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
-	<script src = "../../assets/vendor/popper.js/dist/umd/popper.min.js"></script>
-	<script src = "../../assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-
-	<!-- Plugins -->
-	<script src = "../../assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-
-	<!-- Initialization  -->
-	<script src = "../../assets/js/sidebar-nav.js"></script>
-	<script src = "../../assets/js/main.js"></script>
 </body>
 <!-- End Body -->
 
