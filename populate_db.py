@@ -333,5 +333,3 @@ if (__name__ == '__main__'):
     
     print ("writing doc_term to db...")
     write_doc_term(con, cur, doc_wordcount_file, len(vocab))
-
-    print(f"Acesse: http://localhost/{banco}")
