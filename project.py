@@ -9,7 +9,7 @@ if not os.path.exists("corpus"):
 	tamanho = input("Informe o tamanho do corpus desejado: ")
 	wiki_url = input("Informe o artigo da Wikipedia que será o ponto de partida: ")
 	try:
-	    os.system(f"wiki_scrap_corpus.py {wiki_url} {tamanho}")
+	    os.system(f"wiki_scraping_corpus.py {wiki_url} {tamanho}")
 	except:
 	    print("Algo errado com os valores informados. O programa será encerrado")
 	    exit(1)
