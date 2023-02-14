@@ -16,6 +16,7 @@ while(" " in nome_projeto):
 password = input("MySQL root password: ")
 senha_valida = os.system(f"echo \"create database {nome_projeto};\" | mysql -u root -p{password} 2>/dev/null")
 if (senha_valida != 0):
+    print("Erro ao criar projeto. Verifique se a senha está correta ou se já não existe um projeto com o mesmo nome")
     exit()
 
 ################# Parâmetros do MODELO ###############
