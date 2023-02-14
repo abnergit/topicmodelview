@@ -2,12 +2,6 @@
 import os
 import time
 
-########### VERIFICANDO PERM DO USUÁRIO ############
-if (not os.access("/var/www/html",os.W_OK)):
-	print("Seu usuário não tem permissão em /var/www/html ou apache2 não está instalado")
-	exit()
-
-
 ####### CRIANDO BANCO DE DADOS #####################
 nome_projeto = " "
 while(" " in nome_projeto):
