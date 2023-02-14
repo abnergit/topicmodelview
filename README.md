@@ -16,5 +16,5 @@ Each file in the **corpus** directory is a document to the LDA.
 Each file need to be named as: **doc_0, doc_1, doc_2** and so on...
 
 
-When the script is done, your database is ready!
-Now just install a web server like apache and the requirements to run php and mysql.
+When the script is done, your project is ready!
+A PHP web service will be started at 2000 TCP door. Ensure that this door is free.
