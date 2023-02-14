@@ -2,6 +2,18 @@
 import os
 import time
 
+### VERIFICA SE HA UM CORPUS DEFINIDO #####
+if not os.path.exists("corpus"):
+	print("Você ainda não possui um corpus.")
+	print("Posso buscar para você na wikipedia um corpus a partir de um artigo inicial da wikipedia.")
+	tamanho = input("Informe o tamanho do corpus desejado: ")
+	wiki_url = input("Informe o artigo da Wikipedia que será o ponto de partida: ")
+	try:
+	    os.system(f"wiki_scrap_corpus.py {wiki_url} {tamanho}")
+	except:
+	    print("Algo errado com os valores informados. O programa será encerrado")
+	    exit(1)
+
 ####### CRIANDO BANCO DE DADOS #####################
 nome_projeto = " "
 while(" " in nome_projeto):
