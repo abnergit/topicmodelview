@@ -24,7 +24,6 @@ for i in range(tamanho_corpus):
 
 def extract_text_from_wiki(url):
     if doc_id_queue.empty(): #Se a fila estiver vazia, encerra a execução
-        print("FIM")
         return
 
     if url in visited_pages:
@@ -63,3 +62,4 @@ def extract_text_from_wiki(url):
 
 # Começa a extração de texto a partir da página principal da Wikipedia
 extract_text_from_wiki(link_principal)
+print("FIM")
