@@ -61,7 +61,7 @@ def text2tokens(raw_text):
     clean_text = raw_text.lower().translate(translate_tab) #Faz as substituições de pontuações
     tokens = [token.strip() for token in tokenizer.tokenize(clean_text)]
     tokens = [token for token in tokens if token not in pt_stopwords]
-    stemmed_tokens = [stemmer.stem(token) for token in tokens]
+    #stemmed_tokens = [stemmer.stem(token) for token in tokens]
     return [token for token in stemmed_tokens if len(token) > 2 and not token.isnumeric()]  # skip short tokens and numeric
 
 dataset = [text2tokens(txt) for txt in documentos_lista]  # convert a documents to list of tokens
@@ -183,7 +183,7 @@ gamma.close()
 
 os.system(f"python3 populate_db.py doc_wordcount_file.txt betafile.txt gamma_file.txt vocab_file.txt doc_file.txt {nome_projeto} {password}")
 
-######### INICIANDO A APLICAÇÃO PHP NO SERVIDOR APACHE ###########
+######### INICIANDO A APLICAÇÃO WEB PHP ###########
 
 
 conexao = open("app/conexao_modelo.php","r").read()
