@@ -53,11 +53,12 @@ pt_stopwords = set(stopwords.words('portuguese'))
 
 tokenizer = RegexpTokenizer(r'\s+', gaps=True)
 stemmer = PorterStemmer()
+#Essa linha mapeia pontuações do módulo punctuation por espaços em branco usando seu respectivo unicode para substituição.
 translate_tab = {ord(p): u" " for p in punctuation}
 
 def text2tokens(raw_text):
     """Split the raw_text string into a list of stemmed tokens."""
-    clean_text = raw_text.lower().translate(translate_tab)
+    clean_text = raw_text.lower().translate(translate_tab) #Faz as substituições de pontuações
     tokens = [token.strip() for token in tokenizer.tokenize(clean_text)]
     tokens = [token for token in tokens if token not in pt_stopwords]
     stemmed_tokens = [stemmer.stem(token) for token in tokens]
