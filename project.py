@@ -143,6 +143,7 @@ dicionario.close()
 print("GERANDO MODELO LDA ...")
 from gensim.models import LdaMulticore
 from gensim.corpora import MmCorpus
+from gensim.corpora import Dictionary
 #num_topics = 5
 
 lda_fst = LdaMulticore(
@@ -151,7 +152,8 @@ lda_fst = LdaMulticore(
 )
 os.system("mkdir modelo")
 lda_fst.save('modelo/modelo.lda')
-dictionary.save_as_text('modelo/dicionario')
+dic_gensim = Dictionary(dic_list)
+dic_gensim.save('modelo/dicionario')
 MmCorpus.serialize('modelo/corpus.mm', d2b_dataset)
 ############################################################################################
 
