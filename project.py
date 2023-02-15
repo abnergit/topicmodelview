@@ -69,6 +69,7 @@ pt_stopwords = set(stopwords.words('portuguese'))
 tokenizer = RegexpTokenizer(r'\s+', gaps=True)
 stemmer = PorterStemmer()
 #Essa linha mapeia pontuações do módulo punctuation por espaços em branco usando seu respectivo unicode para substituição.
+punctuation = punctuation + "»«"
 translate_tab = {ord(p): u" " for p in punctuation}
 
 def text2tokens(raw_text):
