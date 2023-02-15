@@ -11,7 +11,7 @@ if not os.path.exists("corpus"):
 
 	print("Aguarde enquanto o corpus está sendo gerado...")
 	os.system(f"python3 wiki_scraping_corpus.py {wiki_url} {tamanho}")
-	os.wait()
+	#os.wait()
 
 
 ####### CRIANDO BANCO DE DADOS #####################
