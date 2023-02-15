@@ -146,7 +146,7 @@ from gensim.models import LdaMulticore
 
 lda_fst = LdaMulticore(
     corpus=d2b_dataset, num_topics=num_topics, id2word=dictionary,
-    workers=4, eval_every=None, passes=10, batch=True,
+    workers=32, eval_every=None, passes=20, batch=True,
 )
 lda_fst.save(f'{nome_projeto}.lda')
 ############################################################################################
