@@ -131,12 +131,12 @@ function get_topic_name($conexao, $id)
 								<!--li class = "list-group-item border-0"-->
 								
 									<?php
-									$sql    = "SELECT * FROM doc_doc where doc_a = $documento_id limit 100";
+									$sql    = "select dt.score, t.title from doc_term as dt, terms as t where dt.term = t.id and doc= $documento_id order by dt.score desc limit 50;";
 									$result = $conexao->query($sql);
 									while ($row = $result->fetch_assoc()) {
 								?> <a class = "media link-dark align-items-center" href = "?id=<?php echo $row['doc_b'] ?>"> <?php
 										#$palavra = get_termo($conexao, $row['term']);
-										echo "doc_".$row['doc_b']. "<br>";
+										echo $row['title']." - ".$row['score']."<br>";
 								?> </a> <?php
 									}
 									?>
