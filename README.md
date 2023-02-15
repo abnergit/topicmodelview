@@ -22,8 +22,14 @@ A PHP web service will be started at 2000 TCP door. Ensure that this door is fre
 # Bibliotecas para instalação:
 
 pip3 install bs4
+
 pip3 install nltk
+
 pip3 install -U scikit-learn
+
 pip3 install -U gensim
+
 pip3 install -U mysql-connector-python
+
 apt install php-mysqli
+
