@@ -1,5 +1,6 @@
 #!/bin/python3
 import os
+import sys
 import time
 
 ### VERIFICA SE HA UM CORPUS DEFINIDO #####
@@ -20,7 +21,7 @@ app_conexao = open("app/conexao.php","r").read()
 if ("nome_database" not in app_conexao):
 	print("Esse projeto já foi executado anteriormente. Se quiser um novo projeto, clone do git https://github.com/abnergit/topicmodelview..")
 	os.system("cd app/;php -S localhost:2000")
-
+	sys.exit(0)
 
 ####### CRIANDO BANCO DE DADOS #####################
 nome_projeto = " "
