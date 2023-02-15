@@ -70,7 +70,8 @@ def text2tokens(raw_text):
     tokens = [token.strip() for token in tokenizer.tokenize(clean_text)]
     tokens = [token for token in tokens if token not in pt_stopwords]
     #stemmed_tokens = [stemmer.stem(token) for token in tokens]
-    return [token for token in stemmed_tokens if len(token) > 2 and not token.isnumeric()]  # skip short tokens and numeric
+    #return [token for token in stemmed_tokens if len(token) > 2 and not token.isnumeric()]  # skip short tokens and numeric
+    return [token for token in tokens if len(token) > 2 and not token.isnumeric()]  # skip short tokens and numeric		  
 
 dataset = [text2tokens(txt) for txt in documentos_lista]  # convert a documents to list of tokens
 
