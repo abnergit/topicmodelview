@@ -13,6 +13,14 @@ if not os.path.exists("corpus"):
 	os.system(f"python3 wiki_scraping_corpus.py {wiki_url} {tamanho}")
 	#os.wait()
 
+	
+##### VERIFICA SE O MODELO JÁ FOI EXECUTADO ######
+
+app_conexao = open("app/conexao.php","r").read()
+if ("nome_database" not in app_conexao):
+	print("Esse projeto já foi executado anteriormente. Se quiser um novo projeto, clone do git https://github.com/abnergit/topicmodelview..")
+	os.system("cd app/;php -S localhost:2000")
+
 
 ####### CRIANDO BANCO DE DADOS #####################
 nome_projeto = " "
@@ -203,7 +211,7 @@ save = open("app/conexao.php","w")
 save.write(new_conexao)
 save.close()
 
-os.system(f"cp -R corpus/ app/")
+#os.system(f"cp -R corpus/ app/")
 os.system("cd app/;php -S localhost:2000")
 
 
