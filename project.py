@@ -83,7 +83,7 @@ def text2tokens(raw_text):
 dataset = [text2tokens(txt) for txt in documentos_lista]  # convert a documents to list of tokens
 
 from gensim.corpora import Dictionary
-print(dataset)
+#print(dataset)
 dictionary = Dictionary(documents=dataset, prune_at=None)
 dictionary.filter_extremes(no_below=5, no_above=0.5, keep_n=None)  # use Dictionary to remove un-relevant tokens
 dictionary.compactify()
