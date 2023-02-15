@@ -2,6 +2,7 @@
 import os
 import sys
 import time
+import nltk
 
 ### VERIFICA SE HA UM CORPUS DEFINIDO #####
 if not os.path.exists("corpus"):
