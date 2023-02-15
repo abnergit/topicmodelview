@@ -63,7 +63,7 @@ for arquivo in arquivos:
 print("Total documentos:"+str(len(documentos_lista)))
 
 
-
+nltk.download('stopwords')
 pt_stopwords = set(stopwords.words('portuguese'))
 
 tokenizer = RegexpTokenizer(r'\s+', gaps=True)
