@@ -9,8 +9,8 @@ if not os.path.exists("corpus"):
 	tamanho = input("Informe o tamanho do corpus desejado: ")
 	wiki_url = input("Informe o artigo da Wikipedia que será o ponto de partida: ")
 	try:
+            print("Aguarde enquanto o corpus está sendo gerado...")
 	    os.system(f"python3 wiki_scraping_corpus.py {wiki_url} {tamanho}")
-	    print("Aguarde enquanto o corpus está sendo gerado...")
 	    os.wait()
 	except:
 	    print("Algo errado com os valores informados. O programa será encerrado")
