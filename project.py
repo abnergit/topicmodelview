@@ -8,13 +8,11 @@ if not os.path.exists("corpus"):
 	print("Posso buscar para você na wikipedia um corpus a partir de um artigo inicial da wikipedia.")
 	tamanho = input("Informe o tamanho do corpus desejado: ")
 	wiki_url = input("Informe o artigo da Wikipedia que será o ponto de partida: ")
-	try:
-            print("Aguarde enquanto o corpus está sendo gerado...")
-	    os.system(f"python3 wiki_scraping_corpus.py {wiki_url} {tamanho}")
-	    os.wait()
-	except:
-	    print("Algo errado com os valores informados. O programa será encerrado")
-	    exit(1)
+
+        print("Aguarde enquanto o corpus está sendo gerado...")
+	os.system(f"python3 wiki_scraping_corpus.py {wiki_url} {tamanho}")
+	os.wait()
+
 
 ####### CRIANDO BANCO DE DADOS #####################
 nome_projeto = " "
