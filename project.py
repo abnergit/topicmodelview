@@ -149,7 +149,7 @@ lda_fst = LdaMulticore(
     workers=32, eval_every=None, passes=20, batch=True,
 )
 os.system("mkdir modelo")
-lda_fst.save(f'{modelo/nome_projeto}.lda')
+lda_fst.save('modelo/modelo.lda')
 dictionary.save_as_text('modelo/dicionario')
 gensim.corpora.MmCorpus.serialize('modelo/corpus.mm', d2b_dataset)
 ############################################################################################
