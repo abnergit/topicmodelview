@@ -24,10 +24,11 @@ for i in range(tamanho_corpus):
 
 def extract_text_from_wiki(url):
     if doc_id_queue.empty(): #Se a fila estiver vazia, encerra a execução
+        os.system("pkill -f wiki_scraping_corpus.py")
         return
 
     if url in visited_pages:
-        return
+        sys.exit(0)
 
     visited_pages.add(url)
 
@@ -58,8 +59,7 @@ def extract_text_from_wiki(url):
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
             futures = [executor.submit(extract_text_from_wiki, "https://pt.wikipedia.org" + link) for link in links[:10]]
-            concurrent.futures.wait(futures)
 
 # Começa a extração de texto a partir da página principal da Wikipedia
 extract_text_from_wiki(link_principal)
-print("FIM")
+
