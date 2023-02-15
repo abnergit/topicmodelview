@@ -10,7 +10,7 @@ if not os.path.exists("corpus"):
 	wiki_url = input("Informe o artigo da Wikipedia que será o ponto de partida: ")
 	try:
 	    os.system(f"python3 wiki_scraping_corpus.py {wiki_url} {tamanho}")
-	    print("Aguarde enquanto o corpus est
+	    print("Aguarde enquanto o corpus está sendo gerado...")
 	    os.wait()
 	except:
 	    print("Algo errado com os valores informados. O programa será encerrado")
