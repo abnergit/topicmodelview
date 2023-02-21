@@ -150,11 +150,11 @@ lda_fst = LdaMulticore(
     corpus=d2b_dataset, num_topics=num_topics, id2word=dictionary,
     workers=32, eval_every=None, passes=20, batch=True,
 )
-os.system("mkdir modelo")
-lda_fst.save('modelo/modelo.lda')
-dic_gensim = Dictionary(dic_list)
-dic_gensim.save('modelo/dicionario')
-MmCorpus.serialize('modelo/corpus.mm', d2b_dataset)
+#os.system("mkdir modelo")
+#lda_fst.save('modelo/modelo.lda')
+#dic_gensim = Dictionary(dic_list)
+#dic_gensim.save('modelo/dicionario')
+#MmCorpus.serialize('modelo/corpus.mm', d2b_dataset)
 ############################################################################################
 
 ########### GERANDO BETA FILE TXT ##########################################################
