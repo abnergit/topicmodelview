@@ -118,7 +118,7 @@ function get_topic_name($conexao, $id)
 					<div class = "card mb-5" align = "left">
 						<!-- Card Header -->
 						<header class = "card-header">
-						<h2     class = "h4 card-header-title"> Textos relacionados </h2>
+						<h2     class = "h4 card-header-title"> Termo - Frequência </h2>
 						</header>
 						<!-- End Card Header -->
 						<!-- Card Body -->
