@@ -58,7 +58,7 @@ def extract_text_from_wiki(url):
                 print(f"Não foi possível capturar a pagina: {href}")
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-            futures = [executor.submit(extract_text_from_wiki, "https://pt.wikipedia.org" + link) for link in links[:10]]
+            futures = [executor.submit(extract_text_from_wiki, "https://pt.wikipedia.org" + link) for link in links[:50]]
 
 # Começa a extração de texto a partir da página principal da Wikipedia
 extract_text_from_wiki(link_principal)
