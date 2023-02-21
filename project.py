@@ -227,7 +227,7 @@ save.close()
 os.system(f"cp -R corpus/ app/")
 #MOVE O CORPUS PARA DENTRO DA APLICACAO
 
-os.system("cd app/;php -S localhost:2000")
+os.system("cd app/;php -S 0.0.0.0:2000")
 
 
 
