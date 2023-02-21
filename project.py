@@ -6,7 +6,7 @@ import nltk
 
 ### VERIFICA SE HA UM CORPUS DEFINIDO #####
 if not os.path.exists("corpus"):
-	print("Você ainda não possui um corpus.")w
+	print("Você ainda não possui um corpus.")
 	print("Posso buscar para você na wikipedia um corpus a partir de um artigo inicial da wikipedia.")
 	tamanho = input("Informe o tamanho do corpus desejado: ")
 	wiki_url = input("Informe o artigo da Wikipedia que será o ponto de partida: ")
