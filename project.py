@@ -6,7 +6,7 @@ import nltk
 
 ### VERIFICA SE HA UM CORPUS DEFINIDO #####
 if not os.path.exists("corpus"):
-	print("Você ainda não possui um corpus.")
+	print("Você ainda não possui um corpus.")w
 	print("Posso buscar para você na wikipedia um corpus a partir de um artigo inicial da wikipedia.")
 	tamanho = input("Informe o tamanho do corpus desejado: ")
 	wiki_url = input("Informe o artigo da Wikipedia que será o ponto de partida: ")
@@ -152,7 +152,7 @@ from gensim.corpora import Dictionary
 
 lda_fst = LdaMulticore(
     corpus=d2b_dataset, num_topics=num_topics, id2word=dictionary,
-    workers=32, eval_every=None, passes=20, batch=True,
+    workers=8, eval_every=None, passes=20, batch=True,
 )
 #os.system("mkdir modelo")
 #lda_fst.save('modelo/modelo.lda')
