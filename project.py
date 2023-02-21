@@ -66,6 +66,8 @@ print("Total documentos:"+str(len(documentos_lista)))
 
 nltk.download('stopwords')
 pt_stopwords = set(stopwords.words('portuguese'))
+eng_stopwords = set(stopwords.words('english'))
+outros_stopwords = ['displaystyle','mathbf', 'isbn', 'iii', 'frac', 'left', 'right', 'press', 've']
 
 tokenizer = RegexpTokenizer(r'\s+', gaps=True)
 stemmer = PorterStemmer()
@@ -78,6 +80,8 @@ def text2tokens(raw_text):
     clean_text = raw_text.lower().translate(translate_tab) #Faz as substituições de pontuações
     tokens = [token.strip() for token in tokenizer.tokenize(clean_text)]
     tokens = [token for token in tokens if token not in pt_stopwords]
+    tokens = [token for token in tokens if token not in eng_stopwords]
+    tokens = [token for token in tokens if token not in outros_stopwords]
     #stemmed_tokens = [stemmer.stem(token) for token in tokens]
     #return [token for token in stemmed_tokens if len(token) > 2 and not token.isnumeric()]  # skip short tokens and numeric
     return [token for token in tokens if len(token) > 2 and not token.isnumeric()]  # skip short tokens and numeric		  
