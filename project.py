@@ -67,7 +67,7 @@ print("Total documentos:"+str(len(documentos_lista)))
 nltk.download('stopwords')
 pt_stopwords = set(stopwords.words('portuguese'))
 eng_stopwords = set(stopwords.words('english'))
-outros_stopwords = ['podem','pode','durante', 'manut', 'link','cs1','pmid','doi','displaystyle','mathbf', 'isbn', 'iii', 'frac', 'left', 'right', 'press', 've', 'consultado', 'arquivada', 'cópia','vec','sen','cos','van']
+outros_stopwords = ['issn','podem','pode','durante', 'manut', 'link','cs1','pmid','doi','displaystyle','mathbf', 'isbn', 'iii', 'frac', 'left', 'right', 'press', 've', 'consultado', 'arquivada', 'cópia','vec','sen','cos','van']
 
 tokenizer = RegexpTokenizer(r'\s+', gaps=True)
 stemmer = PorterStemmer()
