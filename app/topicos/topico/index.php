@@ -106,7 +106,7 @@ function get_topic_name($conexao, $id)
 								<!-- List Group Item -->
 
 								<!--li class = "list-group-item border-0"-->
-								<div   class = "media link-dark align-items-center" href = "?deputado=<?php echo $row['id'] ?>">
+								<div   class = "media link-dark align-items-center" href = "#">
 									<?php
 									$sql    = "SELECT * FROM topic_term where topic = $topico limit 100";
 									$result = $conexao->query($sql);
