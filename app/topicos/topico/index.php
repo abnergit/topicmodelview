@@ -211,18 +211,6 @@ function get_topic_name($conexao, $id)
 	</main>
 	<!-- End Main -->
 
-	
-	<script src = "../../assets/vendor/jquery/dist/jquery.min.js"></script>
-	<script src = "../../assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
-	<script src = "../../assets/vendor/popper.js/dist/umd/popper.min.js"></script>
-	<script src = "../../assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-
-	
-	<script src = "../../assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-
-	<!-- Initialization  -->
-	<script src = "../../assets/js/sidebar-nav.js"></script>
-	<script src = "../../assets/js/main.js"></script>
 </body>
 <!-- End Body -->
 
