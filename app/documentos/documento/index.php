@@ -82,10 +82,6 @@ function get_topic_name($conexao, $id)
 	<!-- Web Fonts -->
 	<link href = "//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel = "stylesheet">
 
-	
-	<link rel = "stylesheet" href = "../../assets/vendor/themify-icons/themify-icons.css">
-	<link rel = "stylesheet" href = "../../assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
-
 	<!-- Theme Styles -->
 	<link rel = "stylesheet" href = "../../css/theme.css">
 </head>
