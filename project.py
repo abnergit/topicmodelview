@@ -22,6 +22,7 @@ app_conexao = open("app/conexao.php","r").read()
 if ("nome_database" not in app_conexao):
 	print("Esse projeto já foi executado anteriormente. Se quiser um novo projeto, clone do git https://github.com/abnergit/topicmodelview..")
 	os.system("cd app/;php -S localhost:2000")
+	print("a")
 	sys.exit(0)
 
 ####### CRIANDO BANCO DE DADOS #####################
