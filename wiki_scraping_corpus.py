@@ -6,7 +6,7 @@ import concurrent.futures
 from queue import Queue
 import urllib.parse
 
-visited_pages = set()
+visited_pages = Queue()
 doc_id_queue = Queue()
 if len(sys.argv) != 3:
     print("Uso: python script.py <link_wikipedia> <tamanho_corpus>")
@@ -27,10 +27,10 @@ def extract_text_from_wiki(url):
         os.system("pkill -f wiki_scraping_corpus.py")
         return
 
-    if url in visited_pages:
+    if url in visited_pages.queue:
         sys.exit(0)
 
-    visited_pages.add(url)
+    visited_pages.put(url)
 
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
