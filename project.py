@@ -98,7 +98,7 @@ def text2tokens(raw_text):
     #return [token for token in stemmed_tokens if len(token) > 2 and not token.isnumeric()]  # skip short tokens and numeric
     return [token for token in tokens if len(token) > 2 and not token.isnumeric()]  # skip short tokens and numeric		  
 
-dataset = [text2tokens(txt) for txt in documentos_lista]  # convert a documents to list of tokens
+dataset = [text2tokens(txt) for txt in documentos_lista+redacoes_lista]  # convert a documents to list of tokens
 
 from gensim.corpora import Dictionary
 #print(dataset)
@@ -108,17 +108,26 @@ dictionary.compactify()
 
 d2b_dataset = [dictionary.doc2bow(doc) for doc in dataset]  # convert list of tokens to bag of word representation
 
-######################## GERANDO DOC FILE #################################################
+######################## GERANDO DOC FILE - CORPUS e REDAÇÃO #################################################
 
 doc_file = open("doc_file.txt","w")
 lista = []
-
+os.mkdir("app/corpus")
 for index, texto in enumerate(documentos_lista):
     
-    saida = open(f"corpus/doc_{index}","w")
+    saida = open(f"app/corpus/doc_{index}","w")
     lista.append(f"doc_{index}")
     saida.write(texto)
     saida.close()
+
+os.mkdir("app/redação")
+for index, texto in enumerate(redacoes_lista):
+    
+    saida = open(f"app/redação/red_{index}","w")
+    lista.append(f"red_{index}")
+    saida.write(texto)
+    saida.close()
+
 
 doc_file.write("\n".join(lista))
 doc_file.close()
@@ -164,7 +173,7 @@ from gensim.corpora import Dictionary
 
 lda_fst = LdaMulticore(
     corpus=d2b_dataset, num_topics=num_topics, id2word=dictionary,
-    workers=8, eval_every=None, passes=20, batch=True,
+    workers=8, eval_every=None, passes=16, batch=True,
 )
 #os.system("mkdir modelo")
 #lda_fst.save('modelo/modelo.lda')
@@ -236,7 +245,7 @@ save = open("app/conexao.php","w")
 save.write(new_conexao)
 save.close()
 
-os.system(f"cp -R corpus/ app/")
+#os.system(f"cp -R corpus/ app/")
 #MOVE O CORPUS PARA DENTRO DA APLICACAO
 
 os.system("cd app/;php -S 0.0.0.0:2000")
