@@ -112,7 +112,8 @@ d2b_dataset = [dictionary.doc2bow(doc) for doc in dataset]  # convert list of to
 
 doc_file = open("doc_file.txt","w")
 lista = []
-os.mkdir("app/corpus")
+if not os.path.exists("app/corpus"):
+    os.mkdir("app/corpus")
 for index, texto in enumerate(documentos_lista):
     
     saida = open(f"app/corpus/doc_{index}","w")
@@ -120,7 +121,8 @@ for index, texto in enumerate(documentos_lista):
     saida.write(texto)
     saida.close()
 
-os.mkdir("app/redações")
+if not os.path.exists("app/redações"):
+    os.mkdir("app/redações")
 for index, texto in enumerate(redacoes_lista):
     
     saida = open(f"app/redações/red_{index}","w")
