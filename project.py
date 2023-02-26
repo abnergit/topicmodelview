@@ -120,10 +120,10 @@ for index, texto in enumerate(documentos_lista):
     saida.write(texto)
     saida.close()
 
-os.mkdir("app/redação")
+os.mkdir("app/redações")
 for index, texto in enumerate(redacoes_lista):
     
-    saida = open(f"app/redação/red_{index}","w")
+    saida = open(f"app/redações/red_{index}","w")
     lista.append(f"red_{index}")
     saida.write(texto)
     saida.close()
