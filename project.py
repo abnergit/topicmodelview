@@ -64,6 +64,15 @@ for arquivo in arquivos:
     texto.close()
 print("Total documentos:"+str(len(documentos_lista)))
 
+redacoes_lista = []
+redacoes = os.listdir("redações/")
+for redacao in redacoes:
+    texto = open("corpus/"+redacao,"r")
+    redacoes_lista.append(texto.read())
+    texto.close()
+print("Total Redações:"+str(len(redacoes_lista)))
+
+
 
 nltk.download('stopwords')
 pt_stopwords = set(stopwords.words('portuguese'))
@@ -229,31 +238,3 @@ os.system(f"cp -R corpus/ app/")
 #MOVE O CORPUS PARA DENTRO DA APLICACAO
 
 os.system("cd app/;php -S 0.0.0.0:2000")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
