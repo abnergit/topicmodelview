@@ -65,13 +65,15 @@ for arquivo in arquivos:
 print("Total documentos:"+str(len(documentos_lista)))
 
 redacoes_lista = []
-redacoes = os.listdir("redações/")
-for redacao in redacoes:
-    texto = open("corpus/"+redacao,"r")
-    redacoes_lista.append(texto.read())
-    texto.close()
-print("Total Redações:"+str(len(redacoes_lista)))
-
+try:
+    redacoes = os.listdir("redações/")
+    for redacao in redacoes:
+        texto = open("corpus/"+redacao,"r")
+        redacoes_lista.append(texto.read())
+        texto.close()
+    print("Total Redações:"+str(len(redacoes_lista)))
+except:
+	continue
 
 
 nltk.download('stopwords')
