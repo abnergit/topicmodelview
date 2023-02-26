@@ -73,7 +73,7 @@ try:
         texto.close()
     print("Total Redações:"+str(len(redacoes_lista)))
 except:
-    continue
+    none
 
 
 nltk.download('stopwords')
