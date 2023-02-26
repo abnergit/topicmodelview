@@ -73,7 +73,7 @@ try:
         texto.close()
     print("Total Redações:"+str(len(redacoes_lista)))
 except:
-    None
+    os.mkdir("redaç
 
 
 nltk.download('stopwords')
