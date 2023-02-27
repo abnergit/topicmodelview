@@ -162,7 +162,7 @@ function get_topic_name($conexao, $id)
 										#echo $palavra . "<br>";
 										$imprime_retorno = imprime_texto($row['doc'], $conexao);
 										$texto = $imprime_retorno[0];
-										
+										$id_texto = $row['doc'];
 										echo "<a href='/documentos/documento/?id=$id_texto' style='color: red;'><b>Redação ".$row['doc']." - Score [".$row['score']."]</b></a>";
 										echo "<textarea readonly rows='3'>";
 										echo $texto;
@@ -175,7 +175,7 @@ function get_topic_name($conexao, $id)
 										#echo $palavra . "<br>";
 										$imprime_retorno = imprime_texto($row['doc'], $conexao);
 										$texto = $imprime_retorno[0];
-										
+										$id_texto = $row['doc'];
 										echo "<a href='/documentos/documento/?id=$id_texto'><b>Documento ".$row['doc']." - Score [".$row['score']."]</b></a>";
 										echo "<textarea readonly rows='3'>";
 										echo $texto;
