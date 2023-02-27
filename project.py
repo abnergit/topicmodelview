@@ -17,16 +17,20 @@ if not os.path.exists("corpus"):
 
 	
 ##### VERIFICA SE O MODELO JÁ FOI EXECUTADO ######
-
+nome_projeto = " "
 app_conexao = open("app/conexao.php","r").read()
 if ("nome_database" not in app_conexao):
-	print("Esse projeto já foi executado anteriormente. Se quiser um novo projeto, clone do git https://github.com/abnergit/topicmodelview..")
-	os.system("cd app/;php -S localhost:2000")
-	print("a")
-	sys.exit(0)
+	#print("Esse projeto já foi executado anteriormente. Se quiser um novo projeto, clone do git https://github.com/abnergit/topicmodelview..")
+	print("Esse projeto já foi compilado anteriormente.")
+	print("Pressione ENTER para iniciar a visualização.")
+	print("Caso deseje recompilar, digite um novo nome de projeto:")
+	nome_projeto = input()
+	if nome_projeto == "":
+	    os.system("cd app/;php -S localhost:2000")
+	    sys.exit(0)
 
 ####### CRIANDO BANCO DE DADOS #####################
-nome_projeto = " "
+
 while(" " in nome_projeto):
 	nome_projeto = input("Informe o nome do Projeto sem espaços: ")
 
