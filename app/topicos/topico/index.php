@@ -155,20 +155,28 @@ function get_topic_name($conexao, $id)
 							<!-- Flushed List Group -->
 							<ul class = "list-group list-group-flush">
 									<?php
-									$sql    = "SELECT * FROM doc_topic where topic = $topico order by score desc limit 20";
+									$sql    = "SELECT dt.doc as doc, dt.score, docs.title  FROM novoteste.doc_topic as dt, docs where docs.id = dt.doc and topic = $topico and docs.title like 'red%' order by score desc limit 20";
 									$result = $conexao->query($sql);
 									while ($row = $result->fetch_assoc()) {
 										#$palavra = get_termo($conexao, $row['term']);
 										#echo $palavra . "<br>";
 										$imprime_retorno = imprime_texto($row['doc'], $conexao);
 										$texto = $imprime_retorno[0];
-										$eRedacao = $imprime_retorno[1];
-										$colorir = "";
-										if($eRedacao){
-											$colorir = "style='color: red;'";
-										}
-										$id_texto = $row['doc'];
-										echo "<a href='/documentos/documento/?id=$id_texto' $colorir><b>Documento ".$row['doc']." - Score [".$row['score']."]</b></a>";
+										
+										echo "<a href='/documentos/documento/?id=$id_texto' style='color: red;'><b>Redação ".$row['doc']." - Score [".$row['score']."]</b></a>";
+										echo "<textarea readonly rows='3'>";
+										echo $texto;
+										echo "</textarea>";
+									}
+									$sql    = "SELECT dt.doc as doc, dt.score, docs.title  FROM novoteste.doc_topic as dt, docs where docs.id = dt.doc and topic = $topico order by score desc limit 20";
+									$result = $conexao->query($sql);
+									while ($row = $result->fetch_assoc()) {
+										#$palavra = get_termo($conexao, $row['term']);
+										#echo $palavra . "<br>";
+										$imprime_retorno = imprime_texto($row['doc'], $conexao);
+										$texto = $imprime_retorno[0];
+										
+										echo "<a href='/documentos/documento/?id=$id_texto'><b>Documento ".$row['doc']." - Score [".$row['score']."]</b></a>";
 										echo "<textarea readonly rows='3'>";
 										echo $texto;
 										echo "</textarea>";
