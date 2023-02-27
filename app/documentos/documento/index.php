@@ -15,24 +15,18 @@ if (isset($_GET['id']) and is_numeric($_GET['id'])) {
 
 function imprime_texto($titulo)
 {
-	/*
-	$id          = explode("oc_", $titulo)[1];
-	$file_handle = fopen("../corpus.txt", "r");
-	$count       = 0;
-	$retorno     = "";
-	while (!feof($file_handle)) {
-		$line = fgets($file_handle);
-		if ($count == $id) {
-			$retorno = $line;
-			break;
+	if(strpos($titulo, "doc") !== false){
+		$file_handle = fopen("../../corpus/$titulo", "r");
+		$retorno = "";
+		while (!feof($file_handle)) {
+			$retorno = $retorno.fgets($file_handle);
 		}
-		$count++;
-	}
-	*/
-	$file_handle = fopen("../../corpus/doc_$titulo", "r");
-	$retorno = "";
-	while (!feof($file_handle)) {
-		$retorno = $retorno.fgets($file_handle);
+	}else{
+		$file_handle = fopen("../../redações/$titulo", "r");
+		$retorno = "";
+		while (!feof($file_handle)) {
+			$retorno = $retorno.fgets($file_handle);
+		}
 	}
 	fclose($file_handle);
 	return $retorno;
@@ -164,7 +158,7 @@ function get_topic_name($conexao, $id)
 									<?php
 									#$palavra = get_termo($conexao, $row['term']);
 									#echo $palavra . "<br>";
-									$texto = imprime_texto($_GET['id']);
+									$texto = imprime_texto($_GET['doc']);
 									#echo "<b>Texto ".$_GET['id']."</b>";
 									echo "<textarea readonly rows='30'>";
 									echo $texto;
