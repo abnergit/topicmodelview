@@ -155,7 +155,7 @@ function get_topic_name($conexao, $id)
 							<!-- Flushed List Group -->
 							<ul class = "list-group list-group-flush">
 									<?php
-									$sql    = "SELECT dt.doc as doc, dt.score, docs.title  FROM doc_topic as dt, docs where docs.id = dt.doc and topic = $topico and docs.title like 'red%' order by score desc limit 20";
+									$sql    = "SELECT dt.doc as doc, dt.score, docs.title  FROM doc_topic as dt, docs where docs.id = dt.doc and topic = $topico and dt.score > 0 and docs.title like 'red%' order by score desc limit 20";
 									$result = $conexao->query($sql);
 									while ($row = $result->fetch_assoc()) {
 										#$palavra = get_termo($conexao, $row['term']);
