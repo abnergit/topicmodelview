@@ -9,29 +9,25 @@ function get_termo($conexao, $id)
 }
 
 function imprime_texto($titulo)
-{
-	/*
-	$id          = explode("oc_", $titulo)[1];
-	$file_handle = fopen("../corpus.txt", "r");
-	$count       = 0;
-	$retorno     = "";
-	while (!feof($file_handle)) {
-		$line = fgets($file_handle);
-		if ($count == $id) {
-			$retorno = $line;
-			break;
+{	
+	if(strpos($titulo, "doc") !== false){
+		$file_handle = fopen("../corpus/$titulo", "r");
+		$retorno = "";
+		while (!feof($file_handle)) {
+			$retorno = $retorno.fgets($file_handle);
 		}
-		$count++;
+	}else{
+		$file_handle = fopen("../redações/$titulo", "r");
+		$retorno = "";
+		while (!feof($file_handle)) {
+			$retorno = $retorno.fgets($file_handle);
+		}
 	}
-	*/
-	$file_handle = fopen("../corpus/$titulo", "r");
-	$retorno = "";
-	while (!feof($file_handle)) {
-		$retorno = $retorno.fgets($file_handle);
-	}
+	
 	fclose($file_handle);
 	return substr($retorno, 0, 500) . "...";
 }
+
 if (isset($_GET['topico'])) {
 	$topico = $_GET['topico'];
 }
