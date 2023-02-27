@@ -205,7 +205,7 @@ function get_topic_name($conexao, $id)
 							<ul class = "list-group list-group-flush">
 									
 									<?php
-									$sql    = "SELECT * FROM topic_topic where topic_a = $topico order by score desc";
+									$sql    = "SELECT * FROM topic_topic where topic_a = $topico order by score asc";
 									$result = $conexao->query($sql);
 									while ($row = $result->fetch_assoc()) {
 										$palavra = get_topic_name($conexao, $row['topic_b']);
