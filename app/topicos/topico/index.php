@@ -16,6 +16,7 @@ if (isset($_GET['id']) and is_numeric($_GET['id'])) {
 
 function imprime_texto($titulo, $conexao)
 {
+	$eRedacao = False;
 	$titulo = addslashes($titulo);
 	$sql = "SELECT * FROM docs where id = $titulo";
 	$result = $conexao->query($sql);
@@ -33,9 +34,10 @@ function imprime_texto($titulo, $conexao)
 		while (!feof($file_handle)) {
 			$retorno = $retorno.fgets($file_handle);
 		}
+		$eRedacao = True;
 	}
 	fclose($file_handle);
-	return substr($retorno, 0, 500) . "...";
+	return array(substr($retorno, 0, 500) . "	...", $eRedacao);
 }
 
 
@@ -158,9 +160,15 @@ function get_topic_name($conexao, $id)
 									while ($row = $result->fetch_assoc()) {
 										#$palavra = get_termo($conexao, $row['term']);
 										#echo $palavra . "<br>";
-										$texto = imprime_texto($row['doc'], $conexao);
+										$imprime_retorno = imprime_texto($row['doc'], $conexao);
+										$texto = $imprime_retorno[0];
+										$eRedacao = $imprime_retorno[1];
+										$colorir = "";
+										if($eRedacao){
+											$colorir = "style='color: red;'";
+										}
 										$id_texto = $row['doc'];
-										echo "<a href='/documentos/documento/?id=$id_texto'><b>Documento ".$row['doc']." - Score [".$row['score']."]</b></a>";
+										echo "<a href='/documentos/documento/?id=$id_texto' $colorir><b>Documento ".$row['doc']." - Score [".$row['score']."]</b></a>";
 										echo "<textarea readonly rows='3'>";
 										echo $texto;
 										echo "</textarea>";
