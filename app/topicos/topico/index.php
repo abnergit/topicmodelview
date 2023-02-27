@@ -14,13 +14,25 @@ if (isset($_GET['id']) and is_numeric($_GET['id'])) {
 <?php
 }
 
-function imprime_texto($titulo, $base)
+function imprime_texto($titulo, $conexao)
 {
-	
-	$file_handle = fopen("../../corpus/doc_$titulo", "r");
-	$retorno = "";
-	while (!feof($file_handle)) {
-		$retorno = $retorno.fgets($file_handle);
+	$titulo = addslashes($titulo);
+	$sql = "SELECT * FROM docs where id = $titulo";
+	$result = $conexao->query($sql);
+	$row = mysqli_fetch_assoc($result);
+	$titulo = $row['title'];
+	if(strpos($titulo, "doc") !== false){
+		$file_handle = fopen("../../corpus/$titulo", "r");
+		$retorno = "";
+		while (!feof($file_handle)) {
+			$retorno = $retorno.fgets($file_handle);
+		}
+	}else{
+		$file_handle = fopen("../../redações/$titulo", "r");
+		$retorno = "";
+		while (!feof($file_handle)) {
+			$retorno = $retorno.fgets($file_handle);
+		}
 	}
 	fclose($file_handle);
 	return substr($retorno, 0, 500) . "...";
@@ -146,7 +158,7 @@ function get_topic_name($conexao, $id)
 									while ($row = $result->fetch_assoc()) {
 										#$palavra = get_termo($conexao, $row['term']);
 										#echo $palavra . "<br>";
-										$texto = imprime_texto($row['doc'], $base);
+										$texto = imprime_texto($row['doc'], $conexao);
 										$id_texto = $row['doc'];
 										echo "<a href='/documentos/documento/?id=$id_texto'><b>Documento ".$row['doc']." - Score [".$row['score']."]</b></a>";
 										echo "<textarea readonly rows='3'>";
