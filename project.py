@@ -72,7 +72,7 @@ redacoes_lista = []
 try:
     redacoes = os.listdir("redações/")
     for redacao in redacoes:
-        texto = open("corpus/"+redacao,"r")
+        texto = open("redações/"+redacao,"r")
         redacoes_lista.append(texto.read())
         texto.close()
     print("Total Redações:"+str(len(redacoes_lista)))
