@@ -623,6 +623,13 @@ pre code {
   margin-right: -15px;
   margin-left: -15px;
 }
+.row_topic {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    justify-content: center;
+}
 
 .no-gutters {
   margin-right: 0;
