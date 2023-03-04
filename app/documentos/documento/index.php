@@ -103,7 +103,7 @@ function get_topic_name($conexao, $id)
 			<div class = "titulos" align = "center">
 					<?php echo "<b>Documento ".$_GET['id']." </b>"; ?>
 				</div>
-				<div class = "row">
+				<div class = "row_topic">
 					
 					<div class = "card mb-5" align = "left">
 						<!-- Card Header -->
