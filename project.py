@@ -83,7 +83,7 @@ except:
 nltk.download('stopwords')
 pt_stopwords = set(stopwords.words('portuguese'))
 eng_stopwords = set(stopwords.words('english'))
-outros_stopwords = ['1–2','2–3','issn','podem','pode','durante', 'manut', 'link','cs1','pmid','doi','displaystyle','mathbf', 'isbn', 'iii', 'frac', 'left', 'right', 'press', 've', 'consultado', 'arquivada', 'cópia','vec','sen','cos','van']
+outros_stopwords = ['pdf', '1–2','2–3','issn','podem','pode','durante', 'manut', 'link','cs1','pmid','doi','displaystyle','mathbf', 'isbn', 'iii', 'frac', 'left', 'right', 'press', 've', 'consultado', 'arquivada', 'cópia','vec','sen','cos','van']
 
 tokenizer = RegexpTokenizer(r'\s+', gaps=True)
 stemmer = PorterStemmer()
