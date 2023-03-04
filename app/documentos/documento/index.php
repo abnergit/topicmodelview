@@ -186,11 +186,13 @@ function get_topic_name($conexao, $id)
 									
 									<?php
 									$sql    = "SELECT * FROM doc_topic where doc = $documento_id order by score desc";
+									$sql = "select * from noite.doc_topic where doc = $documento_id and score > 0 order by score desc";
 									$result = $conexao->query($sql);
 									while ($row = $result->fetch_assoc()) {
-										$palavra = get_topic_name($conexao, $row['topic']);
+										$topico = get_topic_name($conexao, $row['topic']);
+										$score = get_topic_name($conexao, $row['score']);
 										echo "<a href='/topicos/topico/?id=".$row['topic']."' >";
-										echo $palavra;
+										echo "$score - $topico";
 										echo "</a><br>";
 										
 									}
