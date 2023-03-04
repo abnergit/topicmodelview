@@ -190,7 +190,7 @@ function get_topic_name($conexao, $id)
 									$result = $conexao->query($sql);
 									while ($row = $result->fetch_assoc()) {
 										$topico = get_topic_name($conexao, $row['topic']);
-										$score = get_topic_name($conexao, $row['score']);
+										$score = $row['score'];
 										echo "<a href='/topicos/topico/?id=".$row['topic']."' >";
 										echo "$score - $topico";
 										echo "</a><br>";
