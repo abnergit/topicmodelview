@@ -185,8 +185,7 @@ function get_topic_name($conexao, $id)
 							<ul class = "list-group list-group-flush">
 									
 									<?php
-									$sql    = "SELECT * FROM doc_topic where doc = $documento_id order by score desc";
-									$sql = "select * from noite.doc_topic where doc = $documento_id and score > 0 order by score desc";
+									$sql = "select * from doc_topic where doc = $documento_id and score > 0 order by score desc";
 									$result = $conexao->query($sql);
 									while ($row = $result->fetch_assoc()) {
 										$topico = get_topic_name($conexao, $row['topic']);
