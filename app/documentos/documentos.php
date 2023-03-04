@@ -50,7 +50,7 @@ if (isset($topico)) {
 		<div class="card mb-5">
 			<!-- Card Header -->
 			<header class="card-header">
-				<a href="documento/?id=<?php echo $row['id'] ?>"><h2 class="h4 card-header-title">Documento <?php echo $row['id'] ?></h2></a>
+				<a href="documento/?id=<?php echo $row['id'] ?>&doc=<?php echo $row['title'] ?>"><h2 class="h4 card-header-title">Documento <?php echo $row['id'] ?></h2></a>
 			</header>
 			<!-- End Card Header -->
 
