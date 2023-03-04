@@ -40,7 +40,7 @@ def extract_text_from_wiki(url):
         for table in content.find_all("table"):
             table.decompose()
         text += content.get_text()
-    text = text.split("Ver também[editar")[0]
+    text = text.split("Referências\n")[0]
     #Essa linha acima irá ignorar as referências e bibliografias, pois trazem muitas palavras repetidas que atrapalham a modelagem
     if len(text.encode('utf-8')) > 10240: #Se o tamanho do texto for superior a 10kB
         doc_id = doc_id_queue.get()
