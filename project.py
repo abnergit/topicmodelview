@@ -141,7 +141,7 @@ if os.path.exists('modelo/modelo.lda'):
         redacao_word_bow = dicionario.doc2bow(redacao_word)
         redacao_topics = lda_fst.get_document_topics(redacao_word_bow)
         for registro in redacao_word_bow:
-            bow_conteudo.append(f"{ultimo_doc} registro[0] registro[1]")
+            bow_conteudo.append(f"{ultimo_doc} {registro[0]} {registro[1]}")
         for registro in redacao_topics:
             arquivo_conteudo.append(f"{ultimo_doc} {registro[0]} {registro[1]}")
 
