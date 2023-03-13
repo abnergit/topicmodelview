@@ -147,6 +147,7 @@ if os.path.exists('modelo/modelo.lda'):
 
         ultimo_doc = ultimo_doc + 1
     arquivo1.write("\n".join(arquivo_conteudo))
+    arquivo2.write("\n".join(bow_conteudo))
     if len(redacoes_lista) == 0:
     	print("As redações não foram adicionadas")
     else:
