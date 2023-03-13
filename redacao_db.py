@@ -52,7 +52,7 @@ def write_docs(con, cur, total_redacoes):
         id_autoincrement = id_autoincrement + 1
 	
     controle = open("lastdoc_in","w")
-    controle.write(id_autoincrement)
+    controle.write(str(id_autoincrement))
     controle.close()
     con.commit()
 
