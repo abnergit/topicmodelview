@@ -47,7 +47,8 @@ def write_docs(con, cur, total_redacoes):
     con.commit()
     id_autoincrement = int(open("lastdoc_in","r").read())
     for i in range(total_redacoes):
-    	red_nome = f"red_{i}"
+    
+        red_nome = f"red_{i}"
         cur.execute('INSERT INTO docs (id, title) VALUES(%s, %s)', [int(id_autoincrement), red_nome])
         id_autoincrement = id_autoincrement + 1
 	
@@ -104,15 +105,16 @@ def write_topic_term(con, cur, beta_file):
 ### main ###
 
 if (__name__ == '__main__'):
-    if (len(sys.argv) != 3):
+    if (len(sys.argv) != 4):
 
-       print ('usage: python redacao_db.py <Nome_Banco> <Senha_Banco>\n')
+       print ('usage: python redacao_db.py <Nome_Banco> <Senha_Banco> <Quantidade redações>\n')
 
        sys.exit(1)
 
 
     banco = sys.argv[1]
     rootpass = sys.argv[2]
+    quantas_redacoes = sys.argv[3]
 
     # connect to database, which is presumed to not already exist
     con = mysql.connector.connect(
@@ -124,10 +126,6 @@ if (__name__ == '__main__'):
     #con = sqlite3.connect(filename)
     cur = con.cursor()
 
-    # pre-process vocab, since several of the below functions need it in this format
-    vocab = open(vocab_file, 'r').read()
-    vocab = vocab.split("\n")
-    #vocab = [lambda x: x.strip(), vocab]
 
     # write the relevant rlations to the database, see individual functions for details
 
@@ -137,3 +135,9 @@ if (__name__ == '__main__'):
     
     print ("writing doc_term to db REDAÇÕES...")
     #write_doc_term(con, cur, doc_wordcount_file, len(vocab))
+    
+    white_docs(con, cur, quantas_redacoes)
+    
+    
+    
+    
