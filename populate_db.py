@@ -233,7 +233,6 @@ def write_doc_term(con, cur, wordcount_file, no_words):
     con.commit()
     
     doc_no = 0
-    id_autoincrement = 0
     for doc in open(wordcount_file, 'r'):
         doc = doc.split()[1:]
         terms = {}
@@ -244,9 +243,9 @@ def write_doc_term(con, cur, wordcount_file, no_words):
             score = 0
             if i in terms:
                 score = terms[i]
-                execution_string = 'INSERT INTO doc_term (id, doc, term, score) VALUES(%s, %s, %s, %s)'
-                cur.execute(execution_string, [int(id_autoincrement), doc_no, i, score])
-                id_autoincrement = id_autoincrement + 1
+                execution_string = 'INSERT INTO doc_term (doc, term, score) VALUES(%s, %s, %s)'
+                cur.execute(execution_string, [doc_no, i, score])
+
 
         doc_no += 1
     
