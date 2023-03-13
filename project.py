@@ -28,26 +28,34 @@ if ("nome_database" not in app_conexao):
 	if nome_projeto == "":
 	    os.system("cd app/;php -S localhost:2000")
 	    sys.exit(0)
+	password = input("MySQL root password: ")
+	
+else:
+    ####### CRIANDO BANCO DE DADOS #####################
+	
+	
+    while(" " in nome_projeto):
+        nome_projeto = input("Informe o nome do Projeto sem espaços: ")
+    senha_valida = os.system(f"echo \"create database {nome_projeto};\" | mysql -u root -p{password} 2>/dev/null")
+    if (senha_valida != 0):
+        print("Erro ao criar projeto. Verifique se a senha está correta ou se já não existe um projeto com o mesmo nome")
+        exit()
+    
+    ################# Parâmetros do MODELO ###############
+    num_topics = int(input("Informe a quantidade de tópicos desejado: "))
+    
+    
+    time.sleep(1)
+    os.system(f"mysql -u root -p{password} {nome_projeto} < banco.sql 2>/dev/null")
+    
+    #####################################################
 
-####### CRIANDO BANCO DE DADOS #####################
-
-while(" " in nome_projeto):
-	nome_projeto = input("Informe o nome do Projeto sem espaços: ")
-
-password = input("MySQL root password: ")
-senha_valida = os.system(f"echo \"create database {nome_projeto};\" | mysql -u root -p{password} 2>/dev/null")
-if (senha_valida != 0):
-    print("Erro ao criar projeto. Verifique se a senha está correta ou se já não existe um projeto com o mesmo nome")
-    exit()
-
-################# Parâmetros do MODELO ###############
-num_topics = int(input("Informe a quantidade de tópicos desejado: "))
 
 
-time.sleep(1)
-os.system(f"mysql -u root -p{password} {nome_projeto} < banco.sql 2>/dev/null")
 
-#####################################################
+	
+
+
 
 ###### CRIANDO ARQUIVOS #############################
 
@@ -79,6 +87,16 @@ try:
 except:
     os.mkdir("redações")
 
+if not os.path.exists("app/redações"):
+    os.mkdir("app/redações")
+for index, texto in enumerate(redacoes_lista):
+    
+    saida = open(f"app/redações/red_{index}","w")
+    lista.append(f"red_{index}")
+    saida.write(texto)
+    saida.close()
+
+
 
 nltk.download('stopwords')
 pt_stopwords = set(stopwords.words('portuguese'))
@@ -102,6 +120,35 @@ def text2tokens(raw_text):
     #return [token for token in stemmed_tokens if len(token) > 2 and not token.isnumeric()]  # skip short tokens and numeric
     return [token for token in tokens if len(token) > 2 and not token.isnumeric()]  # skip short tokens and numeric		  
 
+
+
+############## RECARREGA O MODELO PARA AVALIAR REDAÇÕES #################################
+
+if os.path.exists('modelo/modelo.lda'):
+    from gensim.models import LdaModel
+    lda_fst = LdaModel.load('modelo/modelo.lda')
+    arquivo = open("redacao_topico_score","w")
+    ultimo_doc = int(open("lastdoc_in","r").read())
+    arquivo_conteudo = []
+    for redacao in redacoes_lista:
+        redacao_word = text2tokens(redacao)
+        dicionario = lda_fst.id2word
+        redacao_word_bow = dicionario.doc2bow(redacao_word)
+        redacao_topics = lda_fst.get_document_topics(redacao_word_bow)
+        for registro in redacao_topics:
+            arquivo_conteudo.append(f"{ultimo_doc} {registro[0]} {registro[1]}")
+
+        ultimo_doc = ultimo_doc + 1
+    arquivo.write("\n".join(arquivo_conteudo))
+    arquivo.close()
+    os.system(f"python3 redacao_db.py {nome_projeto} {password} {len(redacoes_lista)}")
+    os.system("cd app/;php -S localhost:2000")
+    sys.exit(0)
+########################################################################################
+
+
+
+
 dataset = [text2tokens(txt) for txt in documentos_lista+redacoes_lista]  # convert a documents to list of tokens
 
 from gensim.corpora import Dictionary
@@ -122,15 +169,6 @@ for index, texto in enumerate(documentos_lista):
     
     saida = open(f"app/corpus/doc_{index}","w")
     lista.append(f"doc_{index}")
-    saida.write(texto)
-    saida.close()
-
-if not os.path.exists("app/redações"):
-    os.mkdir("app/redações")
-for index, texto in enumerate(redacoes_lista):
-    
-    saida = open(f"app/redações/red_{index}","w")
-    lista.append(f"red_{index}")
     saida.write(texto)
     saida.close()
 
@@ -181,8 +219,9 @@ lda_fst = LdaMulticore(
     corpus=d2b_dataset, num_topics=num_topics, id2word=dictionary,
     workers=8, eval_every=None, passes=16, batch=True,
 )
-#os.system("mkdir modelo")
-#lda_fst.save('modelo/modelo.lda')
+
+os.system("mkdir modelo")
+lda_fst.save('modelo/modelo.lda')
 #dic_gensim = Dictionary(dic_list)
 #dic_gensim.save('modelo/dicionario')
 #MmCorpus.serialize('modelo/corpus.mm', d2b_dataset)
