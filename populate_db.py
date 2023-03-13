@@ -269,7 +269,10 @@ def write_docs(con, cur, docs_file):
     for line in open(docs_file, 'r'):
         cur.execute('INSERT INTO docs (id, title) VALUES(%s, %s)', [int(id_autoincrement), line.strip()])
         id_autoincrement = id_autoincrement + 1
-
+	
+    controle = open("lastdoc_in","w")
+    controle.write(id_autoincrement)
+    controle.close()
     con.commit()
 
 
