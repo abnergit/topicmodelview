@@ -46,7 +46,7 @@ def write_docs(con, cur, total_redacoes):
     #cur.execute('CREATE TABLE docs (id INTEGER PRIMARY KEY, title VARCHAR(100))')
     con.commit()
     id_autoincrement = int(open("lastdoc_in","r").read())
-    for i in range(total_redacoes):
+    for i in range(int(total_redacoes)):
     
         red_nome = f"red_{i}"
         cur.execute('INSERT INTO docs (id, title) VALUES(%s, %s)', [int(id_autoincrement), red_nome])
@@ -67,13 +67,12 @@ def write_doc_topic(con, cur):
     arquivo = open('redacao_topico_score', 'r').read().split("\n")
 
     for doc in arquivo:
-        doc_no = doc.split(" ")[0]
+        doc_no = int(doc.split(" ")[0])
         topic_no = doc.split(" ")[1]
         score = doc.split(" ")[2]
         for i in range(len(doc)):
             #print(doc[i])
             cur.execute('INSERT INTO doc_topic (doc, topic, score) VALUES(%s, %s, %s)', [doc_no, topic_no, score])
-            id_autoincrement = id_autoincrement + 1
         doc_no = doc_no + 1
 
     con.commit()
@@ -136,7 +135,7 @@ if (__name__ == '__main__'):
     print ("writing doc_term to db REDAÇÕES...")
     #write_doc_term(con, cur, doc_wordcount_file, len(vocab))
     
-    white_docs(con, cur, quantas_redacoes)
+    write_docs(con, cur, quantas_redacoes)
     
     
     
