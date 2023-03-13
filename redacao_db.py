@@ -97,7 +97,18 @@ def write_topic_term(con, cur, beta_file):
 
     con.commit()
 
+def write_doc_term(con, cur):
+    con.commit()
+     arquivo = open('redacao_bow', 'r').read().split("\n")
 
+    for doc in arquivo:
+        doc_no = int(doc.split(" ")[0])
+        term = doc.split(" ")[1]
+        freq = doc.split(" ")[2]
+        cur.execute('INSERT INTO doc_term (doc, term, score) VALUES(%s, %s, %s)', [doc_no, term, freq])
+        doc_no = doc_no + 1
+
+    con.commit()
 
 ### main ###
 
@@ -131,7 +142,7 @@ if (__name__ == '__main__'):
     write_doc_topic(con, cur)
     
     print ("writing doc_term to db REDAÇÕES...")
-    #write_doc_term(con, cur, doc_wordcount_file, len(vocab))
+    write_doc_term(con, cur)
     
     write_docs(con, cur, quantas_redacoes)
     
