@@ -1,245 +1,140 @@
-<!DOCTYPE html>
-<?php
-require_once("../../conexao.php");
+import sys
+import math
+#import sqlite3
+import mysql.connector
+import functools
+import os
 
 
-if (isset($_GET['id']) and is_numeric($_GET['id'])) {
-	$topico = $_GET['id'];
-} else {
-	#REDIRECT EM TENTATIVA DE INJECTION ATRAVÉS DA URL
-?>
-	<script>
-		location.replace("../");
-	</script>
-<?php
-}
+### score functions ###
 
-function imprime_texto($titulo, $conexao)
-{
-	$eRedacao = False;
-	$titulo = addslashes($titulo);
-	$sql = "SELECT * FROM docs where id = $titulo";
-	$result = $conexao->query($sql);
-	$row = mysqli_fetch_assoc($result);
-	$titulo = $row['title'];
-	if(strpos($titulo, "doc") !== false){
-		$file_handle = fopen("../../corpus/$titulo", "r");
-		$retorno = "";
-		while (!feof($file_handle)) {
-			$retorno = $retorno.fgets($file_handle);
-		}
-	}else{
-		$file_handle = fopen("../../redações/$titulo", "r");
-		$retorno = "";
-		while (!feof($file_handle)) {
-			$retorno = $retorno.fgets($file_handle);
-		}
-		$eRedacao = True;
-	}
-	fclose($file_handle);
-	return array(substr($retorno, 0, 500) . "	...", $eRedacao);
-}
+def get_doc_score(doca, docb):
+    score = 0
+    total = 0
+    for topic_id in range(len(doca)):
+        thetaa = doca[topic_id]
+        thetab = docb[topic_id]
+        if not ((thetaa != 0.0 and thetab == 0.0) or (thetaa == 0.0 and thetab != 0.0)):
+            score += math.pow(thetaa - thetab, 2)
+    return 0.5 * score
+
+def get_topic_score(topica, topicb):
+    score = 0
+    #print(topica)
+    #print(topica.keys())
+    total = math.pow(abs(math.sqrt(100) - math.sqrt(0)), 2) * len(topica)
+    for term_id in range(len(topica)):
+        #print(topica[1])
+        #print(topica[1][1])
+        thetaa = abs(topica[term_id])
+        thetab = abs(topicb[term_id])
+        score += math.pow(abs(math.sqrt(thetaa) - math.sqrt(thetab)), 2)
+    return 0.5 * score / total
+
+def get_term_score(terma, termb):
+    score = 0
+    for term_id in range(len(terma)):
+        score += math.pow(terma[term_id] - termb[term_id], 2)
+    return score
 
 
-require_once("../../conexao.php");
+### write relations to db functions ###
 
-function get_termo($conexao, $id)
-{
-	$sql = "SELECT * FROM terms where id = $id;";
 
-	$result = $conexao->query($sql);
-	$row    = $result->fetch_array();
-	return $row['title'];
-}
-function get_topic_name($conexao, $id)
-{
-	$sql = "SELECT * FROM topics where id = $id;";
+
+def write_docs(con, cur, total_redacoes):
+    #cur.execute('CREATE TABLE docs (id INTEGER PRIMARY KEY, title VARCHAR(100))')
+    con.commit()
+    id_autoincrement = int(open("lastdoc_in","r").read())
+    for i in range(int(total_redacoes)):
+    
+        red_nome = f"red_{i}"
+        cur.execute('INSERT INTO docs (id, title) VALUES(%s, %s)', [int(id_autoincrement), red_nome])
+        id_autoincrement = id_autoincrement + 1
 	
-	$result = $conexao->query($sql);
-	$row    = $result->fetch_array();
-	return $row['title'];
-}
-?>
-<html lang = "en" class = "no-js">
-<!-- Head -->
+    controle = open("lastdoc_in","w")
+    controle.write(str(id_autoincrement))
+    controle.close()
+    con.commit()
 
-<head>
-	<title>Documentos</title>
+def write_doc_topic(con, cur):
+    #cur.execute('CREATE TABLE doc_topic (id INTEGER PRIMARY KEY, doc INTEGER, topic INTEGER, score FLOAT)')
+    #cur.execute('CREATE INDEX doc_topic_idx1 ON doc_topic(doc)')
+    #cur.execute('CREATE INDEX doc_topic_idx2 ON doc_topic(topic)')
+    con.commit()
 
-	<!-- Meta -->
-	<meta charset    = "utf-8">
-	<meta name       = "viewport" content        = "width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta http-equiv = "x-ua-compatible" content = "ie=edge">
+    # for each line in the gamma file
+    arquivo = open('redacao_topico_score', 'r').read().split("\n")
 
-	<!-- Favicon -->
-	<link rel = "shortcut icon" href = "../../favicon.png" type = "image/x-icon">
+    for doc in arquivo:
+        doc_no = int(doc.split(" ")[0])
+        topic_no = doc.split(" ")[1]
+        score = doc.split(" ")[2]
+        cur.execute('INSERT INTO doc_topic (doc, topic, score) VALUES(%s, %s, %s)', [doc_no, topic_no, score])
+        doc_no = doc_no + 1
 
-	<!-- Web Fonts -->
-	<link href = "//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel = "stylesheet">
+    con.commit()
+        
+def write_topic_term(con, cur, beta_file):
+    #cur.execute('CREATE TABLE topic_term (id INTEGER PRIMARY KEY, topic INTEGER, term INTEGER, score FLOAT)')
+    #cur.execute('CREATE INDEX topic_term_idx1 ON topic_term(topic)')
+    #cur.execute('CREATE INDEX topic_term_idx2 ON topic_term(term)')
+    con.commit()
+    
+    topic_no = 0
+    id_autoincrement = 0
+    #topic_term_file = open(filename, 'a')
+    
+    for topic in open(beta_file, 'r'):
+        topic = list(map(float, topic.split()))
+        indices = list(range(len(topic))) # note: len(topic) should be the same as len(vocab)
+        key_f = lambda x : -topic[x]
+        indices.sort(key=key_f)
+        for i in range(len(topic)):
+            cur.execute('INSERT INTO topic_term (id, topic, term, score) VALUES(%s, %s, %s, %s)', [int(id_autoincrement), topic_no, indices[i], topic[indices[i]]])
+            id_autoincrement = id_autoincrement + 1
+        topic_no = topic_no + 1
 
-	<!-- Theme Styles -->
-	<link rel = "stylesheet" href = "../../css/theme.css">
-</head>
-<!-- End Head -->
-
-<!-- Body -->
-
-<body>
-	<!-- Header (Topbar) -->
-
-	<?php include("../../header.html"); ?>
-
-	<!-- End Header (Topbar) -->
-
-	<!-- Main -->
-	<main class = "u-main">
-		<!-- Sidebar -->
-		<?php include("../../sidebar.html"); ?>
-		<!-- End Sidebar -->
-
-		<!-- Content -->
-		<div class = "u-content">
-			<!-- Content Body -->
-			<div class = "u-body">
-			<div class = "titulos" align = "center">
-					<?php echo "<b>".get_topic_name($conexao, $_GET['id'])."</b>"; ?>
-				</div>
-				<div class = "row_topic">
-					
-					<div class = "card mb-5" align = "left">
-						<!-- Card Header -->
-						<header class = "card-header">
-						<h2     class = "h4 card-header-title"> Termos relacionados </h2>
-						</header>
-						<!-- End Card Header -->
-						<!-- Card Body -->
-						<div class = "card-body py-0">
-							<!-- Flushed List Group -->
-							<ul class = "list-group list-group-flush">
-
-								<!-- List Group Item -->
-
-								<!--li class = "list-group-item border-0"-->
-								<div   class = "media link-dark align-items-center" href = "#">
-									<?php
-									$sql    = "SELECT * FROM topic_term where topic = $topico limit 100";
-									$result = $conexao->query($sql);
-									while ($row = $result->fetch_assoc()) {
-										$palavra = get_termo($conexao, $row['term']);
-										echo $palavra . "<br>";
-									}
-									?>
-
-									</a>
-									<!--/li-->
-									<!-- End List Group Item -->
-								</div>
-
-							</ul>
-							<!-- End Flushed List Group -->
-						</div>
-						<!-- End Card Body -->
-					</div>
-					<!-- End Card -->
-					<!-- FINAL PALAVRAS -->
-
-					<!-- INICIO DOCUMENTOS RELCIONADOS -->
-					<div class = "col-md-7 col-lg-7" align = "center">
-						<!-- Card Header -->
-						<header class = "card-header">
-						<h2     class = "h4 card-header-title"> Textos relacionados </h2>
-						</header>
-						<!-- End Card Header -->
-						<!-- Card Body -->
-						<div class = "py-0">
-							<!-- Flushed List Group -->
-							<ul class = "list-group list-group-flush">
-									<?php
-									$sql    = "SELECT dt.doc as doc, dt.score, docs.title  FROM doc_topic as dt, docs where docs.id = dt.doc and topic = $topico and dt.score > 0 and docs.title like 'red%' order by score desc limit 20";
-									$result = $conexao->query($sql);
-									while ($row = $result->fetch_assoc()) {
-										#$palavra = get_termo($conexao, $row['term']);
-										#echo $palavra . "<br>";
-										$imprime_retorno = imprime_texto($row['doc'], $conexao);
-										$texto = $imprime_retorno[0];
-										$doc = $row['title'];
-										$id = $row['doc'];
-										echo "<a href='/documentos/documento/?id=$id&doc=$doc' style='color: red;'><b>Redação ".$row['title']." - Score [".$row['score']."]</b></a>";
-										echo "<textarea readonly rows='3'>";
-										echo $texto;
-										echo "</textarea>";
-									}
-									$sql    = "SELECT dt.doc as doc, dt.score, docs.title  FROM doc_topic as dt, docs where docs.id = dt.doc and topic = $topico order by score desc limit 20";
-									$result = $conexao->query($sql);
-									while ($row = $result->fetch_assoc()) {
-										#$palavra = get_termo($conexao, $row['term']);
-										#echo $palavra . "<br>";
-										$imprime_retorno = imprime_texto($row['doc'], $conexao);
-										$texto = $imprime_retorno[0];
-										$doc = $row['title'];
-										$id = $row['doc'];
-										echo "<a href='/documentos/documento/?id=$id&doc=$doc'><b>Documento ".$row['doc']." - Score [".$row['score']."]</b></a>";
-										echo "<textarea readonly rows='3'>";
-										echo $texto;
-										echo "</textarea>";
-									}
-									?>
-							</ul>
-							<!-- End Flushed List Group -->
-						</div>
-						<!-- End Card Body -->
-					</div>
-					<!-- End Card -->
-					<!-- FINAL DOCUMENTOS -->
-					
-					<!-- INICIO TÓPICOS RELCIONADOS -->
-					<div class = "card mb-5" align = "center">
-						<!-- Card Header -->
-						<header class = "card card-header">
-						<h2     class = "h4 card-header-title"> Tópicos relacionados </h2>
-						</header>
-						<!-- End Card Header -->
-						<!-- Card Body -->
-						<div class = "py-0">
-							<!-- Flushed List Group -->
-							<ul class = "list-group list-group-flush">
-									
-									<?php
-									$sql    = "SELECT * FROM topic_topic where topic_a = $topico order by score asc";
-									$result = $conexao->query($sql);
-									while ($row = $result->fetch_assoc()) {
-										$palavra = get_topic_name($conexao, $row['topic_b']);
-										echo "<a href='/topicos/topico/?id=".$row['topic_b']."' >";
-										echo $palavra;
-										echo "</a><br>";
-										
-									}
-									?>
-							</ul>
-							<!-- End Flushed List Group -->
-						</div>
-						<!-- End Card Body -->
-					</div>
-					<!-- End Card -->
-					<!-- FINAL POSTS -->
+    con.commit()
 
 
 
+### main ###
+
+if (__name__ == '__main__'):
+    if (len(sys.argv) != 4):
+
+       print ('usage: python redacao_db.py <Nome_Banco> <Senha_Banco> <Quantidade redações>\n')
+
+       sys.exit(1)
 
 
-				</div>
-			</div>
-			<!-- End Content Body -->
+    banco = sys.argv[1]
+    rootpass = sys.argv[2]
+    quantas_redacoes = sys.argv[3]
 
-			<?php include("../../footer.html") ?>
-		</div>
-		<!-- End Content -->
-	</main>
-	<!-- End Main -->
+    # connect to database, which is presumed to not already exist
+    con = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password=rootpass,
+        database=banco
+    )
+    #con = sqlite3.connect(filename)
+    cur = con.cursor()
 
-</body>
-<!-- End Body -->
 
-</html>
+    # write the relevant rlations to the database, see individual functions for details
 
-<?php $conexao->close(); ?>
+
+    print ("writing doc_topic to db REDAÇÕES...")
+    write_doc_topic(con, cur)
+    
+    print ("writing doc_term to db REDAÇÕES...")
+    #write_doc_term(con, cur, doc_wordcount_file, len(vocab))
+    
+    write_docs(con, cur, quantas_redacoes)
+    
+    
+    
+    
