@@ -130,24 +130,29 @@ def text2tokens(raw_text):
 if os.path.exists('modelo/modelo.lda'):
     from gensim.models import LdaModel
     lda_fst = LdaModel.load('modelo/modelo.lda')
-    arquivo = open("redacao_topico_score","w")
+    arquivo1 = open("redacao_topico_score","w")
+    arquivo2 = open("redacao_bow","w")
     ultimo_doc = int(open("lastdoc_in","r").read())
     arquivo_conteudo = []
+    bow_conteudo = []
     for redacao in redacoes_lista:
         redacao_word = text2tokens(redacao)
         dicionario = lda_fst.id2word
         redacao_word_bow = dicionario.doc2bow(redacao_word)
         redacao_topics = lda_fst.get_document_topics(redacao_word_bow)
+        for registro in redacao_word_bow:
+            bow_conteudo.append(f"{ultimo_doc} registro[0] registro[1]")
         for registro in redacao_topics:
             arquivo_conteudo.append(f"{ultimo_doc} {registro[0]} {registro[1]}")
 
         ultimo_doc = ultimo_doc + 1
-    arquivo.write("\n".join(arquivo_conteudo))
+    arquivo1.write("\n".join(arquivo_conteudo))
     if len(redacoes_lista) == 0:
     	print("As redações não foram adicionadas")
     else:
     	os.system(f"python3 redacao_db.py {nome_projeto} {password} {len(redacoes_lista)}")
-    arquivo.close()
+    arquivo1.close()
+    arquivo2.close()
     os.system("cd app/;php -S localhost:2000")
     sys.exit(0)
 ########################################################################################
