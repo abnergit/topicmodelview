@@ -70,9 +70,7 @@ def write_doc_topic(con, cur):
         doc_no = int(doc.split(" ")[0])
         topic_no = doc.split(" ")[1]
         score = doc.split(" ")[2]
-        for i in range(len(doc)):
-            #print(doc[i])
-            cur.execute('INSERT INTO doc_topic (doc, topic, score) VALUES(%s, %s, %s)', [doc_no, topic_no, score])
+        cur.execute('INSERT INTO doc_topic (doc, topic, score) VALUES(%s, %s, %s)', [doc_no, topic_no, score])
         doc_no = doc_no + 1
 
     con.commit()
