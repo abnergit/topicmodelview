@@ -97,7 +97,7 @@ def write_doc_topic(con, cur, gamma_file):
         doc = list(map(float, doc.split()))
         for i in range(len(doc)):
             #print(doc[i])
-            cur.execute('INSERT INTO doc_topic (id, doc, topic, score) VALUES(%s, %s, %s, %s)', [int(id_autoincrement),doc_no, i, doc[i]])
+            cur.execute('INSERT INTO doc_topic (doc, topic, score) VALUES(%s, %s, %s, %s)', [doc_no, i, doc[i]])
             id_autoincrement = id_autoincrement + 1
         doc_no = doc_no + 1
 
