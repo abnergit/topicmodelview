@@ -143,8 +143,11 @@ if os.path.exists('modelo/modelo.lda'):
 
         ultimo_doc = ultimo_doc + 1
     arquivo.write("\n".join(arquivo_conteudo))
+    if len(redacoes_lista) == 0:
+    	print("As redações não foram adicionadas")
+    else:
+    	os.system(f"python3 redacao_db.py {nome_projeto} {password} {len(redacoes_lista)}")
     arquivo.close()
-    os.system(f"python3 redacao_db.py {nome_projeto} {password} {len(redacoes_lista)}")
     os.system("cd app/;php -S localhost:2000")
     sys.exit(0)
 ########################################################################################
