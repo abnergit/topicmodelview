@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS `doc_term`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `doc_term` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `doc` int NOT NULL,
   `term` int NOT NULL,
   `score` float NOT NULL,
