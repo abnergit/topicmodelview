@@ -65,13 +65,13 @@ def write_doc_topic(con, cur):
 
     # for each line in the gamma file
     arquivo = open('redacao_topico_score', 'r').read().split("\n")
-
+    print(arquivo)
     for doc in arquivo:
-        doc_no = int(doc.split(" ")[0])
+        doc_no = doc.split(" ")[0]
         topic_no = doc.split(" ")[1]
         score = doc.split(" ")[2]
         cur.execute('INSERT INTO doc_topic (doc, topic, score) VALUES(%s, %s, %s)', [doc_no, topic_no, score])
-        doc_no = doc_no + 1
+        doc_no = int(doc_no) + 1
 
     con.commit()
         
@@ -99,7 +99,7 @@ def write_topic_term(con, cur, beta_file):
 
 def write_doc_term(con, cur):
     con.commit()
-     arquivo = open('redacao_bow', 'r').read().split("\n")
+    arquivo = open('redacao_bow', 'r').read().split("\n")
 
     for doc in arquivo:
         doc_no = int(doc.split(" ")[0])
