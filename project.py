@@ -19,6 +19,7 @@ if not os.path.exists("corpus"):
 ##### VERIFICA SE O MODELO JÁ FOI EXECUTADO ######
 nome_projeto = " "
 app_conexao = open("app/conexao.php","r").read()
+password = input("MySQL root password: ")
 if ("nome_database" not in app_conexao):
 	#print("Esse projeto já foi executado anteriormente. Se quiser um novo projeto, clone do git https://github.com/abnergit/topicmodelview..")
 	print("Esse projeto já foi compilado anteriormente.")
@@ -28,7 +29,7 @@ if ("nome_database" not in app_conexao):
 	if nome_projeto == "":
 	    os.system("cd app/;php -S localhost:2000")
 	    sys.exit(0)
-	password = input("MySQL root password: ")
+	
 	
 else:
     ####### CRIANDO BANCO DE DADOS #####################
@@ -89,6 +90,8 @@ except:
 
 if not os.path.exists("app/redações"):
     os.mkdir("app/redações")
+    
+lista = [] 
 for index, texto in enumerate(redacoes_lista):
     
     saida = open(f"app/redações/red_{index}","w")
@@ -162,7 +165,7 @@ d2b_dataset = [dictionary.doc2bow(doc) for doc in dataset]  # convert list of to
 ######################## GERANDO DOC FILE - CORPUS e REDAÇÃO #################################################
 
 doc_file = open("doc_file.txt","w")
-lista = []
+
 if not os.path.exists("app/corpus"):
     os.mkdir("app/corpus")
 for index, texto in enumerate(documentos_lista):
