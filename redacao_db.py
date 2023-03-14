@@ -8,6 +8,12 @@ import os
 
 ### score functions ###
 
+def clean_redacoes(con, cur):
+	con.commit()
+	cur.execute('delete from doc_topic where doc = (select id from docs where title like "%red%")')
+	cur.execute('delete from doc_term where doc = (select id from docs where title like "%red%")')
+	cur.execute('delete from docs where title like "%red%"')
+
 def get_doc_score(doca, docb):
     score = 0
     total = 0
@@ -137,7 +143,7 @@ if (__name__ == '__main__'):
 
     # write the relevant rlations to the database, see individual functions for details
 
-
+    clean_redacoes(con, cur)
     print ("writing doc_topic to db REDAÇÕES...")
     write_doc_topic(con, cur)
     
