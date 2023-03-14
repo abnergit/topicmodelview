@@ -9,10 +9,11 @@ import os
 ### score functions ###
 
 def clean_redacoes(con, cur):
-	con.commit()
-	cur.execute('delete from doc_topic where doc = (select id from docs where title like "%red%")')
-	cur.execute('delete from doc_term where doc = (select id from docs where title like "%red%")')
-	cur.execute('delete from docs where title like "%red%"')
+    con.commit()
+    cur.execute('delete from doc_topic where doc = (select id from docs where title like "%red%")')
+    cur.execute('delete from doc_term where doc = (select id from docs where title like "%red%")')
+    cur.execute('delete from docs where title like "%red%"')
+    con.commit()
 
 def get_doc_score(doca, docb):
     score = 0
