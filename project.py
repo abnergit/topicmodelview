@@ -24,11 +24,12 @@ if ("nome_database" not in app_conexao):
 	#print("Esse projeto já foi executado anteriormente. Se quiser um novo projeto, clone do git https://github.com/abnergit/topicmodelview..")
 	print("Esse projeto já foi compilado anteriormente.")
 	print("Pressione ENTER para iniciar a visualização.")
-	print("Caso deseje recompilar, digite um novo nome de projeto:")
-	nome_projeto = input()
-	if nome_projeto == "":
-	    os.system("cd app/;php -S localhost:2000")
-	    sys.exit(0)
+	print("Caso deseje avaliar as redações, digite [Y/y]: ",end='')
+	nome_projeto = app_conexao.split("base = \"")[1].split("\"")[0]
+	recompilar = input()
+	if recompilar.lower() != "y":
+		os.system("cd app/;php -S localhost:2000")
+		sys.exit(0)
 	
 	
 else:
