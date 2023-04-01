@@ -224,13 +224,14 @@ from gensim.models import LdaMulticore
 from gensim.corpora import MmCorpus
 from gensim.corpora import Dictionary
 #num_topics = 5
-alpha = 0.01
-eta = 0.001
-iterations = 100
+alpha = 0
+eta = 0
+iterations = 200
+passes = 32
 
 lda_fst = LdaMulticore(
     corpus=d2b_dataset, num_topics=num_topics, id2word=dictionary,alpha=alpha, eta=eta,
-    workers=8, eval_every=None, passes=16, batch=True, iterations=iterations
+    workers=8, eval_every=None, passes=passes, batch=True, iterations=iterations
 )
 
 os.system("mkdir modelo")
