@@ -163,8 +163,9 @@ dataset = [text2tokens(txt) for txt in documentos_lista+redacoes_lista]  # conve
 
 from gensim.corpora import Dictionary
 #print(dataset)
+no_below = int(len(dataset)*0.05)
 dictionary = Dictionary(documents=dataset, prune_at=None)
-dictionary.filter_extremes(no_below=5, no_above=0.85, keep_n=None)  # use Dictionary to remove un-relevant tokens
+dictionary.filter_extremes(no_below=no_below, no_above=0.50, keep_n=None)  # use Dictionary to remove un-relevant tokens
 dictionary.compactify()
 
 d2b_dataset = [dictionary.doc2bow(doc) for doc in dataset]  # convert list of tokens to bag of word representation
