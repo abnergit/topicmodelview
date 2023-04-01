@@ -126,6 +126,7 @@ function get_topic_name($conexao, $id)
 									$result = $conexao->query($sql);
 									while ($row = $result->fetch_assoc()) {
 										$palavra = get_termo($conexao, $row['term']);
+										$score = $row['score'];
 										echo $palavra . " - ($score) <br>";
 									}
 									?>
