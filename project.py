@@ -106,7 +106,7 @@ outros_stopwords = ['inglês','pdf', '1–2','2–3','issn','podem','pode','dura
 tokenizer = RegexpTokenizer(r'\s+', gaps=True)
 stemmer = PorterStemmer()
 #Essa linha mapeia pontuações do módulo punctuation por espaços em branco usando seu respectivo unicode para substituição.
-punctuation = punctuation + "»«"
+punctuation = punctuation + "»«”s̥̽“"
 translate_tab = {ord(p): u" " for p in punctuation}
 
 def text2tokens(raw_text):
