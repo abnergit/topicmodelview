@@ -55,10 +55,6 @@ else:
 
 
 
-	
-
-
-
 ###### CRIANDO ARQUIVOS #############################
 
 import logging
@@ -228,10 +224,13 @@ from gensim.models import LdaMulticore
 from gensim.corpora import MmCorpus
 from gensim.corpora import Dictionary
 #num_topics = 5
+alpha = 0.01
+eta = 0.01
+iterations = 100
 
 lda_fst = LdaMulticore(
-    corpus=d2b_dataset, num_topics=num_topics, id2word=dictionary,
-    workers=8, eval_every=None, passes=16, batch=True,
+    corpus=d2b_dataset, num_topics=num_topics, id2word=dictionary,alpha=alpha, eta=eta,
+    workers=8, eval_every=None, passes=16, batch=True, iterations=iterations
 )
 
 os.system("mkdir modelo")
