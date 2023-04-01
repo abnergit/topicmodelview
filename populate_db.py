@@ -260,7 +260,7 @@ def write_terms(con, cur, terms_file):
             cur.execute('INSERT INTO terms (id, title) VALUES(%s, %s)', [str(id_autoincrement), line.strip()])
         except:
             print(f"Nao adicionada ao BANCO: {line}")
-	id_autoincrement = id_autoincrement + 1
+        id_autoincrement = id_autoincrement + 1
     con.commit()
 
 def write_docs(con, cur, docs_file):
