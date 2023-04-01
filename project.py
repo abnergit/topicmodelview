@@ -225,7 +225,7 @@ from gensim.corpora import MmCorpus
 from gensim.corpora import Dictionary
 #num_topics = 5
 alpha = 0.01
-eta = 0.01
+eta = 0.001
 iterations = 100
 
 lda_fst = LdaMulticore(
