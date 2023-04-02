@@ -26,7 +26,12 @@ def extract_text_from_wiki(url):
     if doc_id_queue.empty(): #Se a fila estiver vazia, encerra a execução
         os.system("pkill -f wiki_scraping_corpus.py")
         return
-
+    artigo = url.split("/wiki/")[1]
+    
+    if artigo[0].isnumeric:
+        #Para evitar artigos que tratem de datas. São um pouco confusos
+        return
+    
     if url in visited_pages.queue:
         sys.exit(0)
 
