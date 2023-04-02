@@ -225,8 +225,8 @@ from gensim.models import LdaMulticore
 from gensim.corpora import MmCorpus
 from gensim.corpora import Dictionary
 #num_topics = 5
-alpha = 0
-eta = 0
+alpha = 0.1
+eta = 0.1
 iterations = 200
 passes = 32
 
