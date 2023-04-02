@@ -28,7 +28,7 @@ def extract_text_from_wiki(url):
         return
     artigo = url.split("/wiki/")[1]
     
-    if artigo[0].isnumeric:
+    if artigo[0].isnumeric():
         #Para evitar artigos que tratem de datas. São um pouco confusos
         return
     
