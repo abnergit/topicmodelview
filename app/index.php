@@ -7,8 +7,6 @@ require_once("conexao.php");
 <html lang="en" class="no-js">
 	<!-- Head -->
 	<head>
-		<title>TCC - Modelo de Tópicos</title>
-
 		<!-- Meta -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
