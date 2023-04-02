@@ -1,4 +1,11 @@
+<?php require_once("conexao.php"); ?>
+
 <html>
+<?php 
+      $result = $conexao->query("select database()");
+      $row = $result->fetch_assoc();
+      $titulo = $row[1];
+      echo "<title>$titulo - Modelo de Tópicos</title>";
 <div class="topo-class">
   <header class="u-header">
     <!-- Header Left Section -->
@@ -10,9 +17,12 @@
       <!-- End Header Logo -->
     </div>
     <div name="titulo" class="titulo">
+      
       Sistema de Visualização Para Modelo de Tópico
     </div>
   </header>
 </div>
 
 </html>
+
+<?php $conexao->close(); ?>
