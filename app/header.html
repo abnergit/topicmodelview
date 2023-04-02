@@ -1,11 +1,11 @@
 <?php require_once("conexao.php"); ?>
-
 <html>
 <?php 
-      $result = $conexao->query("select database()");
-      $row = $result->fetch_assoc();
-      $titulo = $row[1];
-      echo "<title>$titulo - Modelo de Tópicos</title>";
+  $result = $conexao->query("select database()");
+  $row = $result->fetch_row();
+  $titulo = $row[0];
+  echo "<title>Projeto - $titulo</title>";
+?>
 <div class="topo-class">
   <header class="u-header">
     <!-- Header Left Section -->
@@ -24,5 +24,3 @@
 </div>
 
 </html>
-
-<?php $conexao->close(); ?>
