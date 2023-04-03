@@ -165,7 +165,7 @@ from gensim.corpora import Dictionary
 #print(dataset)
 no_below = int(len(dataset)*0.05)
 dictionary = Dictionary(documents=dataset, prune_at=None)
-dictionary.filter_extremes(no_below=no_below, no_above=0.20, keep_n=None)  # use Dictionary to remove un-relevant tokens
+dictionary.filter_extremes(no_below=no_below, no_above=0.10, keep_n=None)  # use Dictionary to remove un-relevant tokens
 dictionary.compactify()
 
 d2b_dataset = [dictionary.doc2bow(doc) for doc in dataset]  # convert list of tokens to bag of word representation
