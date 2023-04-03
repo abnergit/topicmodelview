@@ -228,7 +228,7 @@ from gensim.corpora import Dictionary
 alpha = 0.1
 eta = 0.1
 iterations = 200
-passes = 32
+passes = 50
 
 lda_fst = LdaMulticore(
     corpus=d2b_dataset, num_topics=num_topics, id2word=dictionary,alpha=alpha, eta=eta,
