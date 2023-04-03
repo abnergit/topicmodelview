@@ -10,8 +10,8 @@ import os
 
 def clean_redacoes(con, cur):
     con.commit()
-    cur.execute('delete from doc_topic where doc = (select id from docs where title like "%red%")')
-    cur.execute('delete from doc_term where doc = (select id from docs where title like "%red%")')
+    cur.execute('delete from doc_topic where doc IN (select id from docs where title like "%red%")')
+    cur.execute('delete from doc_term where doc IN (select id from docs where title like "%red%")')
     cur.execute('delete from docs where title like "%red%"')
     con.commit()
 
